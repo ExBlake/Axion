@@ -1,0 +1,54 @@
+CREATE TABLE Empresas (
+    Id_Empresa BIGINT PRIMARY KEY,
+    Nombre VARCHAR(255) NOT NULL,
+    Fecha_Creacion TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    Fecha_Actualizacion TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+);
+
+CREATE TABLE Usuarios (
+    Id_Usuario VARCHAR(255) PRIMARY KEY,
+    Id_Empresa BIGINT,
+    Identificacion VARCHAR(50) NOT NULL,
+    Nombre VARCHAR(255) NOT NULL,
+    Apellidos VARCHAR(255) NOT NULL,
+    Email VARCHAR(255) UNIQUE NOT NULL,
+    Contrasena VARCHAR(255) NOT NULL,
+    Estado ENUM('Activo', 'Inactivo') DEFAULT 'Activo',
+    Foto VARCHAR(255),
+    Fecha_Creacion TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    Fecha_Actualizacion TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+    Fecha_UltimoAcceso TIMESTAMP NULL,
+    FOREIGN KEY (Id_Empresa) REFERENCES Empresas(Id_Empresa) ON DELETE SET NULL
+);
+
+CREATE TABLE Planes (
+    Id_Planes VARCHAR(255) PRIMARY KEY,
+    Nombre VARCHAR(255) NOT NULL,
+    Fecha_Creacion TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    Fecha_Actualizacion TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+);
+
+CREATE TABLE Empresas_Planes (
+    Id_Empresa BIGINT,
+    Id_Planes VARCHAR(255),
+    Fecha_Contratacion TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    Estado ENUM('Activo', 'Inactivo') DEFAULT 'Activo',
+    PRIMARY KEY (Id_Empresa, Id_Planes),
+    FOREIGN KEY (Id_Empresa) REFERENCES Empresas(Id_Empresa) ON DELETE CASCADE,
+    FOREIGN KEY (Id_Planes) REFERENCES Planes(Id_Planes) ON DELETE CASCADE
+);
+
+CREATE TABLE Informes (
+    Id_Informe VARCHAR(255) PRIMARY KEY,
+    Id_Planes VARCHAR(255),
+    Id_Empresa BIGINT,
+    Url VARCHAR(255) NOT NULL,
+    Estado ENUM('Generado', 'Pendiente', 'Archivado') DEFAULT 'Pendiente',
+    Fecha_Creacion TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    Fecha_Actualizacion TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+    PRIMARY KEY (Id_Informe),
+    FOREIGN KEY (Id_Planes) REFERENCES Planes(Id_Planes) ON DELETE CASCADE,
+    FOREIGN KEY (Id_Empresa) REFERENCES Empresas(Id_Empresa) ON DELETE CASCADE
+);
+
+

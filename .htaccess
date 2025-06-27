@@ -1,0 +1,136 @@
+RewriteEngine On
+
+php_flag display_errors On
+php_value error_reporting 32767
+
+
+# ----------- PHP REWRITES -------------
+# Reescribe la URL para 'Index.php'
+RewriteRule ^Inicio$ index.php [L]
+
+# Reescribe la URL para 'Index.php'
+RewriteRule ^Configuracion$ View/Settings.php [L]
+
+# Reescribe la URL para 'PowerBI.php'
+RewriteRule ^Informes$ View/PowerBI.php [L]
+
+# Reescribe la URL para 'Users.php'
+RewriteRule ^Usuarios$ View/Users.php [L]
+
+# Reescribe la URL para 'Companies.php'
+RewriteRule ^Empresas$ View/Companies.php [L]
+
+# Reescribe la URL para 'Dashboard.php'
+RewriteRule ^Tablero$ View/Dashboard.php [L]
+
+# Reescribe la URL para 'LogIn.php'
+RewriteRule ^Iniciar_Sesion$ View/LogIn.php [L]
+
+# Reescribe la URL para 'SignUp.php'
+RewriteRule ^Registrar$ View/SignUp.php [L]
+
+# Reescribe la URL para 'Uzz.php'
+RewriteRule ^XZ$ Controller/Uzz.php [L]
+
+# Reescribe la URL para 'LogOutController.php'
+RewriteRule ^Log$ Controller/LogOutController.php [L]
+
+# Reescribe la URL para 'Comments.php'
+RewriteRule ^PQRS$ View/Comments.php [L]
+
+
+# ----------- PHP REWRITES -------------
+
+
+
+# ----------- CSS REWRITES -------------
+
+# Reescribe la URL para 'Styles_Menus.css'
+RewriteRule ^Estilos_Menu_Hawks$ View/css/Styles_Menus.css [L]
+
+# Reescribe la URL para 'Styles_Settings.css'
+RewriteRule ^Estilos_Configuracion_Hawks$ View/css/Styles_Settings.css [L]
+
+# Reescribe la URL para 'Styles_Companies.css'
+RewriteRule ^Estilos_Empresas_Hawks$ View/css/Styles_Companies.css [L]
+
+# Reescribe la URL para 'Styles_Dashboard.css'
+RewriteRule ^Estilos_Tablero_Hawks$ View/css/Styles_Dashboard.css [L]
+
+# Reescribe la URL para 'Styles_Login.css'
+RewriteRule ^Estilos_Inicio_Sesion_Hawks$ View/css/Styles_Login.css [L]
+
+# Reescribe la URL para 'Styles_PowerBI.css'
+RewriteRule ^Estilos_PowerBI_Hawks$ View/css/Styles_PowerBI.css [L]
+
+# Reescribe la URL para 'Styles_SignUp.css'
+RewriteRule ^Estilos_Registros_Hawks$ View/css/Styles_SignUp.css [L]
+
+# Reescribe la URL para 'Styles_Users.css'
+RewriteRule ^Estilos_Usuarios_Hawks_ALL$ View/css/Styles_Users.css [L]
+
+# Reescribe la URL para 'Styles_Comments.css'
+RewriteRule ^Estilos_PQRS_Hawks$ View/css/Styles_Comments.css [L]
+
+
+# ----------- CSS REWRITES -------------
+
+
+# ----------- JS REWRITES --------------
+
+# Reescribe la URL para 'Script_Menus.js'
+RewriteRule ^Funcion_Menu$ View/js/Script_Menus.js [L]
+
+# Reescribe la URL para 'Script_Settings.js'
+RewriteRule ^Funcion_Configuracion$ View/js/Script_Settings.js [L]
+
+# Reescribe la URL para 'Script_Companies.js'
+RewriteRule ^Funcion_Empresa_ALLs$ View/js/Script_Companies.js [L]
+
+# Reescribe la URL para 'Script_Dashboard.js'
+RewriteRule ^Funcion_Tablero$ View/js/Script_Dashboard.js [L]
+
+# Reescribe la URL para 'Script_PowerBI.js'
+RewriteRule ^Funcion_PowerBI$ View/js/Script_PowerBI.js [L]
+
+# Reescribe la URL para 'Script_SignUp.js'
+RewriteRule ^Funcion_Registro$ View/js/Script_SignUp.js [L]
+
+# Reescribe la URL para 'Script_syncSettings.js'
+RewriteRule ^Funcion_Sincronizacion$ View/js/Script_syncSettings.js [L]
+
+# Reescribe la URL para 'Script_Users.js'
+RewriteRule ^Funcion_Usuarios_ALL$ View/js/Script_Users.js [L]
+
+# Reescribe la URL para 'Script_Comments.js'
+RewriteRule ^Funcion_PQRS_ALLS$ View/js/Script_Comments.js [L]
+
+# ----------- JS REWRITES -------------
+
+
+# ----------- IMG REWRITES -------------
+
+# Reescribe 'PImageRecurso' a 'img'
+RewriteRule ^PImageRecurso/(.*)$ View/img/$1 [L]
+
+# Reescribe 'Icono' a 'View/img/icono.ico'
+RewriteRule ^Icono$ View/img/icono.ico [L]
+
+# Reescribe 'PImageUser' a 'PicturesUsers'
+RewriteRule ^PImageUser/(.*)$ PicturesUsers/$1 [L]
+
+# Reescribe 'PImageCompany' a 'PicturesCompanies'
+RewriteRule ^PImageCompany/(.*)$ PicturesCompanies/$1 [L]
+
+
+
+
+# ----------- IMG REWRITES -------------
+
+
+# ----------- VIDEO REWRITES -------------
+
+# Reescribe 'PVideoBanner' a 'Videos/Banners'
+# RewriteRule ^PVideoBanner/(.*)$ View/Videos/Banners/$1 [L]
+
+# ----------- VIDEO REWRITES -------------
