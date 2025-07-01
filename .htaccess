@@ -38,6 +38,9 @@ RewriteRule ^Log$ Controller/LogOutController.php [L]
 # Reescribe la URL para 'Comments.php'
 RewriteRule ^PQRS$ View/Comments.php [L]
 
+# Reescribe la URL para 'Tutorials.php'
+RewriteRule ^Tutoriales$ View/Tutorials.php [L]
+
 
 # ----------- PHP REWRITES -------------
 
@@ -46,10 +49,10 @@ RewriteRule ^PQRS$ View/Comments.php [L]
 # ----------- CSS REWRITES -------------
 
 # Reescribe la URL para 'Styles_Menus.css'
-RewriteRule ^Estilos_Menu_Hawks$ View/css/Styles_Menus.css [L]
+RewriteRule ^Estilos_Menu$ View/css/Styles_Menus.css [L]
 
 # Reescribe la URL para 'Styles_Settings.css'
-RewriteRule ^Estilos_Configuracion_Hawks$ View/css/Styles_Settings.css [L]
+RewriteRule ^Estilos_Configuracion$ View/css/Styles_Settings.css [L]
 
 # Reescribe la URL para 'Styles_Companies.css'
 RewriteRule ^Estilos_Empresas_Hawks$ View/css/Styles_Companies.css [L]
@@ -71,6 +74,9 @@ RewriteRule ^Estilos_Usuarios_Hawks_ALL$ View/css/Styles_Users.css [L]
 
 # Reescribe la URL para 'Styles_Comments.css'
 RewriteRule ^Estilos_PQRS_Hawks$ View/css/Styles_Comments.css [L]
+
+# Reescribe la URL para 'Styles_Tutorials.css'
+RewriteRule ^Estilos_Tutoriales$ View/css/Styles_Tutorials.css [L]
 
 
 # ----------- CSS REWRITES -------------
@@ -105,6 +111,9 @@ RewriteRule ^Funcion_Usuarios_ALL$ View/js/Script_Users.js [L]
 # Reescribe la URL para 'Script_Comments.js'
 RewriteRule ^Funcion_PQRS_ALLS$ View/js/Script_Comments.js [L]
 
+# Reescribe la URL para 'Script_Comments.js'
+RewriteRule ^Funcion_Tutoriales$ View/js/Script_Tutorials.js [L]
+
 # ----------- JS REWRITES -------------
 
 
@@ -112,6 +121,9 @@ RewriteRule ^Funcion_PQRS_ALLS$ View/js/Script_Comments.js [L]
 
 # Reescribe 'PImageRecurso' a 'img'
 RewriteRule ^PImageRecurso/(.*)$ View/img/$1 [L]
+
+# Reescribe 'PImageTutoriales' a 'Tutorials'
+RewriteRule ^PImageTutoriales/(.*)$ View/img/Tutorials/$1 [L]
 
 # Reescribe 'Icono' a 'View/img/icono.ico'
 RewriteRule ^Icono$ View/img/icono.ico [L]

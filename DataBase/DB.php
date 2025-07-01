@@ -1,9 +1,15 @@
 <?php
 class Database {
+    // private $host = 'localhost';
+    // private $username = 'u761334274_SantiagoV';
+    // private $password = 'k05$ZbO8&Po';
+    // private $database = 'u761334274_int_ext_hawks';
+    // private $conn;
+
     private $host = 'localhost';
-    private $username = 'u761334274_SantiagoV';
-    private $password = 'k05$ZbO8&Po';
-    private $database = 'u761334274_int_ext_hawks';
+    private $username = 'root';
+    private $password = '';
+    private $database = 'hawks_capital';
     private $conn;
 
     // public function __construct() {
