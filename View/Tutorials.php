@@ -4,10 +4,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Tutorials - Dashboard iOS Style</title>
+    <title>Tutoriales</title>
     <link rel="icon" type="image/x-icon" href="Icono">
     <link rel="stylesheet" href="Estilos_Menu">
-    <link rel="stylesheet" href="Estilos_Configuracion">
     <link rel="stylesheet" href="Estilos_Tutoriales">
     <link rel="stylesheet"
         href="https://fonts.googleapis.com/css2?family=SF+Pro+Display:wght@300;400;500;600&display=swap">
@@ -47,7 +46,7 @@
                 <!-- Videos Grid -->
                 <div class="videos-grid" id="videos-grid">
                     <div class="video-card" data-video-id="1"
-                        data-video-url="https://www.youtube.com/embed/izGwDsrQ1eQ?si=3UgizbfepJq2I_AZ"
+                        data-video-url="https://www.youtube.com/embed/1qnUnR8QQfI?si=Qabm27NBPjdChUcT"
                         data-description="Descubre cómo personalizar tu panel de control para adaptarlo a tus necesidades, visualizar la información más relevante y mejorar tu experiencia dentro de la plataforma de forma rápida y sencilla.">
                         <div class="video-thumbnail">
                             <div class="thumbnail-placeholder">
@@ -62,7 +61,7 @@
                             <h3 class="video-title">Guía rápida para personalizar tu Panel de Control</h3>
                         </div>
                     </div>
-                    <div class="video-card" data-video-id="2" data-video-url="https://www.youtube.com/embed/dQw4w9WgXcQ"
+                    <div class="video-card" data-video-id="2" data-video-url="https://www.youtube.com/embed/0EwXW_C17z0?si=NP5T-I3OYLAQUEZ-"
                         data-description="Aprende cómo gestionar de manera efectiva tus PQRS (Peticiones, Quejas, Reclamos y Sugerencias) dentro de nuestra plataforma, asegurando una atención oportuna, organizada y conforme a los lineamientos de calidad del servicio.">
                         <div class="video-thumbnail">
                             <div class="thumbnail-placeholder">
@@ -113,7 +112,7 @@
                 </div>
                 <div class="video-info">
                     <div class="video-description">
-                        <h3>Description</h3>
+                        <h3>Descripción</h3>
                         <p id="video-description">Video description will appear here...</p>
                     </div>
                 </div>

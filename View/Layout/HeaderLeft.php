@@ -44,6 +44,12 @@
                     <span>Usuarios</span>
                 </a>
             </li>
+            <li>
+                <a href="Reportes">
+                   <i class="fas fa-chart-bar"></i>
+                    <span>Reportes</span>
+                </a>
+            </li>
             <?php } ?>
             <!-- Menú dinámico basado en la empresa del usuario y sus planes -->
             <?php 

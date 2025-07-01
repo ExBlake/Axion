@@ -44,6 +44,9 @@ RewriteRule ^Tutoriales$ View/Tutorials.php [L]
 # Reescribe la URL para 'Plans.php'
 RewriteRule ^Planes$ View/Plans.php [L]
 
+# Reescribe la URL para 'ManagementReports.php'
+RewriteRule ^Reportes$ View/ManagementReports.php [L]
+
 
 # ----------- PHP REWRITES -------------
 
@@ -84,6 +87,9 @@ RewriteRule ^Estilos_Tutoriales$ View/css/Styles_Tutorials.css [L]
 # Reescribe la URL para 'Styles_Plans.css'
 RewriteRule ^Estilos_Planes$ View/css/Styles_Plans.css [L]
 
+# Reescribe la URL para 'Styles_ManagementReports.css'
+RewriteRule ^Estilos_Reportes$ View/css/Styles_ManagementReports.css [L]
+
 # ----------- CSS REWRITES -------------
 
 
@@ -119,8 +125,8 @@ RewriteRule ^Funcion_PQRS_ALLS$ View/js/Script_Comments.js [L]
 # Reescribe la URL para 'Script_Tutorials.js'
 RewriteRule ^Funcion_Tutoriales$ View/js/Script_Tutorials.js [L]
 
-# Reescribe la URL para 'Script_Plans.js'
-RewriteRule ^Funcion_Planes$ View/js/Script_Plans.js [L]
+# Reescribe la URL para 'Script_ManagementReports.js'
+RewriteRule ^Funcion_Reportes$ View/js/Script_ManagementReports.js [L]
 
 # ----------- JS REWRITES -------------
 
