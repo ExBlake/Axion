@@ -15,7 +15,7 @@
             <div class="logo-circle">
                 <i class="fas fa-cube"></i>
             </div>
-            <span class="logo-text">Workspace</span>
+            <span class="logo-text">Axion</span>
         </div>
         <button id="sidebar-toggle" class="sidebar-toggle" title="Toggle Sidebar">
             <i class="fas fa-chevron-left"></i>
@@ -93,6 +93,12 @@
                 <a href="PQRS">
                     <i class="fas fa-message"></i>
                     <span>PQRS</span>
+                </a>
+            </li>
+             <li>
+                <a href="Planes">
+                 <i class="fas fa-briefcase"></i>
+                    <span>Planes</span>
                 </a>
             </li>
             <li>

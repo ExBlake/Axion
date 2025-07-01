@@ -41,6 +41,9 @@ RewriteRule ^PQRS$ View/Comments.php [L]
 # Reescribe la URL para 'Tutorials.php'
 RewriteRule ^Tutoriales$ View/Tutorials.php [L]
 
+# Reescribe la URL para 'Plans.php'
+RewriteRule ^Planes$ View/Plans.php [L]
+
 
 # ----------- PHP REWRITES -------------
 
@@ -78,6 +81,8 @@ RewriteRule ^Estilos_PQRS_Hawks$ View/css/Styles_Comments.css [L]
 # Reescribe la URL para 'Styles_Tutorials.css'
 RewriteRule ^Estilos_Tutoriales$ View/css/Styles_Tutorials.css [L]
 
+# Reescribe la URL para 'Styles_Plans.css'
+RewriteRule ^Estilos_Planes$ View/css/Styles_Plans.css [L]
 
 # ----------- CSS REWRITES -------------
 
@@ -111,8 +116,11 @@ RewriteRule ^Funcion_Usuarios_ALL$ View/js/Script_Users.js [L]
 # Reescribe la URL para 'Script_Comments.js'
 RewriteRule ^Funcion_PQRS_ALLS$ View/js/Script_Comments.js [L]
 
-# Reescribe la URL para 'Script_Comments.js'
+# Reescribe la URL para 'Script_Tutorials.js'
 RewriteRule ^Funcion_Tutoriales$ View/js/Script_Tutorials.js [L]
+
+# Reescribe la URL para 'Script_Plans.js'
+RewriteRule ^Funcion_Planes$ View/js/Script_Plans.js [L]
 
 # ----------- JS REWRITES -------------
 
