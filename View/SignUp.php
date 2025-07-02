@@ -5,8 +5,8 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Registro</title>
   <link rel="icon" type="image/x-icon" href="Icono">
-  <link rel="stylesheet" href="Estilos_Inicio_Sesion_Hawks">
-  <link rel="stylesheet" href="Estilos_Registros_Hawks">
+  <link rel="stylesheet" href="Estilos_Inicio_Sesion">
+  <link rel="stylesheet" href="Estilos_Registros">
 </head>
 <body>
   <div class="grid">

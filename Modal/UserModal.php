@@ -62,11 +62,12 @@ class UsuarioModel{
      * @param string $Apellidos Apellidos del usuario.
      * @param string $Correo Correo electrónico.
      * @param string $Contrasena Contraseña en texto plano.
+     * @param int $Telefono Telefono del usuario.
      * @param string $Rol Rol asignado.
      * @param array $Fotos Fotos del usuario.
      * @return mixed True en caso de éxito, o mensaje de error.
      */
-    public function RegisterUserModel($Empresa, $Cedula, $Nombre, $Apellidos, $Correo, $Contrasena, $Rol, $Fotos) {
+    public function RegisterUserModel($Empresa, $Cedula, $Nombre, $Apellidos, $Correo, $Contrasena, $Telefono, $Rol, $Fotos) {
         $conn = $this->db->getConnection();
         if (!$conn) {
             throw new Exception("Error de conexión: " . mysqli_connect_error());
@@ -131,36 +132,40 @@ class UsuarioModel{
                         $hashedPassword = password_hash($Contrasena, PASSWORD_BCRYPT);
 
                         // Prepara la consulta de inserción
-                        $sql = "INSERT INTO Usuarios (Id_Usuario, Id_Empresa, Identificacion, Nombre, Apellidos, Email, Contrasena, Foto, Rol) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
+                        $sql = "INSERT INTO Usuarios (Id_Usuario, Id_Empresa, Identificacion, Nombre, Apellidos, Email, Contrasena, Telefono, Foto, Rol) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
                         $stmt = $conn->prepare($sql);
                         if (!$stmt) return("Error en la preparación de la consulta de inserción: " . $conn->error);
 
                         // Convierte $Fotos a cadena si es un array
                         $Fotos = is_array($Fotos) ? implode(",", $Fotos) : "";
 
-                        $stmt->bind_param("siissssss",  $token, $Empresa, $Cedula, $Nombre, $Apellidos, $Correo, $hashedPassword, $Fotos, $Rol);
+                        $stmt->bind_param("ssissssiss",  $token, $Empresa, $Cedula, $Nombre, $Apellidos, $Correo, $hashedPassword, $Telefono, $Fotos, $Rol);
                         $result = $stmt->execute();
 
                         if (!$result) {
-                            return("Error en la ejecución");
+                            $_SESSION['Mensaje'] = "Error en la ejecución";
+                            $_SESSION['MensajeTipo'] = "error";
                         }
 
                         $stmt->close();
                         return true; // Registro exitoso
                     } else {
-                        return "Error: Solo se permiten archivos JPG, JPEG y PNG para las fotos.";
-                        header("Location: Usuarios23"); // Redirigir a la página adecuada
+                        $_SESSION['Mensaje'] = "Error: Solo se permiten archivos JPG, JPEG y PNG para las fotos.";
+                        $_SESSION['MensajeTipo'] = "error";
+                        header("Location: Usuarios"); // Redirigir a la página adecuada
                         exit;
                     }
                 } else {
-                    return "Error: Debes subir al menos una foto válida.";
-                    header("Location: Usuarios11"); // Redirigir a la página adecuada
+                    $_SESSION['Mensaje'] = "Error: Debes subir al menos una foto válida.";
+                    $_SESSION['MensajeTipo'] = "error";
+                    header("Location: Usuarios"); // Redirigir a la página adecuada
                     exit;
                 }
             }
         } catch (Exception $e) {
-            $_SESSION['mensaje'] = $e->getMessage();
-            header("Location: Usuarios2222"); // Redirigir a la página adecuada
+            $_SESSION['Mensaje'] = $e->getMessage();
+            $_SESSION['MensajeTipo'] = "error";
+            header("Location: Usuarios"); // Redirigir a la página adecuada
             exit;
         } finally {
             $conn->close(); // Cerrar la conexión
@@ -408,16 +413,16 @@ class UsuarioModel{
      *
      * @throws Exception Si hay un error de conexión a la base de datos.
      */
-    public function UpdateUserByAdmin($id, $cc, $nombres, $apellidos, $email, $empresa, $rol, $estado, $foto){
+    public function UpdateUserByAdmin($id, $cc, $nombres, $apellidos, $email, $Telefono, $empresa, $rol, $estado, $foto){
         $conn = $this->db->getConnection();
         if (!$conn) {
             throw new Exception("Error de conexión: " . mysqli_connect_error());
         }
 
-        $sql = "UPDATE Usuarios SET Id_Empresa = ?, Identificacion = ?, Nombre = ?, Apellidos = ?, Email = ?, Estado = ?, Rol = ?, Foto = ? WHERE Id_Usuario = ?";
+        $sql = "UPDATE Usuarios SET Id_Empresa = ?, Identificacion = ?, Nombre = ?, Apellidos = ?, Email = ?, Telefono = ?, Estado = ?, Rol = ?, Foto = ? WHERE Id_Usuario = ?";
 
         $stmt = $conn->prepare($sql);
-        $stmt->bind_param("sisssssss", $empresa, $cc, $nombres, $apellidos, $email, $estado, $rol, $foto, $id);
+        $stmt->bind_param("sisssissss", $empresa, $cc, $nombres, $apellidos, $email, $Telefono, $estado, $rol, $foto, $id);
 
         $stmt->execute();
         $stmt->close();

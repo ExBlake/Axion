@@ -306,6 +306,7 @@ document.addEventListener("DOMContentLoaded", () => {
           nombre,
           apellidos,
           email,
+          telefono,
           role,
           idempresa,
           status
@@ -316,6 +317,7 @@ document.addEventListener("DOMContentLoaded", () => {
         document.getElementById("user-name-edit").value = nombre || '';
         document.getElementById("user-lastname-edit").value = apellidos || '';
         document.getElementById("user-email-edit").value = email || '';
+        document.getElementById("user-telefono-edit").value = telefono || '';
         document.getElementById("user-role-edit").value = role || '';
         document.getElementById("company-select-edit").value = idempresa || '';
         document.getElementById("user-status-edit").value = status || '';
@@ -336,6 +338,7 @@ document.addEventListener("DOMContentLoaded", () => {
           nombre,
           apellidos,
           email,
+          telefono,
           role,
           foto,
           idempresa,
@@ -347,6 +350,7 @@ document.addEventListener("DOMContentLoaded", () => {
         document.getElementById("user-name-edit").value = nombre || '';
         document.getElementById("user-lastname-edit").value = apellidos || '';
         document.getElementById("user-email-edit").value = email || '';
+        document.getElementById("user-telefono-edit").value = telefono || '';
         document.getElementById("user-role-edit").value = role || '';
         document.getElementById("company-select-edit").value = idempresa || '';
         document.getElementById("user-status-edit").value = status || '';

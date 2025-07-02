@@ -6,8 +6,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Empresas</title>
     <link rel="icon" type="image/x-icon" href="Icono">
-    <link rel="stylesheet" href="Estilos_Menu_Hawks">
-    <link rel="stylesheet" href="Estilos_Empresas_Hawks">
+    <link rel="stylesheet" href="Estilos_Menu">
+    <link rel="stylesheet" href="Estilos_Empresas">
     <link rel="stylesheet"
         href="https://fonts.googleapis.com/css2?family=SF+Pro+Display:wght@300;400;500;600&display=swap">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap">
@@ -447,7 +447,7 @@
     </div>
 
     <script src="Funcion_Menu"></script>
-    <script src="Funcion_Empresa_ALLs"></script>
+    <script src="Funcion_Empresa"></script>
     <script src="Funcion_Sincronizacion"></script>
 </body>
 

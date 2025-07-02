@@ -65,14 +65,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         // USUARIOS - EDITAR USUARIO POR ADMIN
         //**********************************************/
         elseif (isset($_POST['accionEditarUsuario']) && $_POST['accionEditarUsuario'] === 'Editar_Usuario') {
-            $id = trim($_POST['ID_USUARIO']);
-            $cc = trim($_POST['CC']);
-            $nombres = trim($_POST['NOMBRES']);
-            $apellidos = trim($_POST['APELLIDOS']);
-            $email = trim($_POST['EMAIL']);
-            $empresa = trim($_POST['EMPRESA']);
-            $rol = trim($_POST['ROL']);
-            $estado = trim($_POST['ESTADO']);
             $User->EditUserByAdminController();
         }
 

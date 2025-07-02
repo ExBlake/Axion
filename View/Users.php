@@ -5,9 +5,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Usuarios</title>
     <link rel="icon" type="image/x-icon" href="Icono">
-    <link rel="stylesheet" href="Estilos_Menu_Hawks">
-    <link rel="stylesheet" href="Estilos_Configuracion_Hawks">
-    <link rel="stylesheet" href="Estilos_Usuarios_Hawks_ALL">
+    <link rel="stylesheet" href="Estilos_Menu">
+    <link rel="stylesheet" href="Estilos_Configuracion">
+    <link rel="stylesheet" href="Estilos_Usuarios">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=SF+Pro+Display:wght@300;400;500;600&display=swap">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Roboto+Mono:wght@400;500&display=swap">
@@ -108,6 +108,7 @@
                         $Nombre = htmlspecialchars($user['Nombre'] ?? 'Desconocido');
                         $Apellidos = htmlspecialchars($user['Apellidos'] ?? 'Desconocido');
                         $Email = htmlspecialchars($user['Email'] ?? 'Desconocido');
+                        $Telefono = htmlspecialchars($user['Telefono'] ?? 'Desconocido');
                         $Estado = htmlspecialchars($user['Estado'] ?? 'Desconocido');
                         $Id_Empresa = htmlspecialchars($user['Id_Empresa'] ?? '');
                         $Empresa = htmlspecialchars($user['NombreEmpresa'] ?? 'Sin Empresa');
@@ -129,7 +130,7 @@
                         $imgPath = !empty($Foto) ? "PImageUser/" . $Foto : "PImageUser/User_Unknown.jpg";
 
                         return compact(
-                            'Id', 'Id_Usuario', 'Nombre', 'Apellidos', 'Email', 'Estado',
+                            'Id', 'Id_Usuario', 'Nombre', 'Apellidos', 'Email', 'Telefono','Estado',
                             'Empresa', 'Id_Empresa', 'Rol', 'Foto', 'Fecha_Creacion', 'Fecha_Actualizacion',
                             'Fecha_UltimoAcceso', 'imgPath'
                         );
@@ -153,6 +154,7 @@
                             data-nombre="<?php echo $Nombre; ?>"
                             data-apellidos="<?php echo $Apellidos; ?>"
                             data-email="<?php echo $Email; ?>"
+                            data-telefono="<?php echo $Telefono; ?>"
                             data-idempresa="<?php echo $Id_Empresa; ?>"
                             data-empresa="<?php echo $Empresa; ?>"
                             data-foto="<?php echo $imgPath; ?>"
@@ -181,8 +183,12 @@
                             </div>
                             <div class="user-meta">
                                 <div class="meta-item">
-                                <i class="fa-solid fa-id-card"></i>
+                                    <i class="fa-solid fa-id-card"></i>
                                     <span class="data-id">Id: <?php echo $Id_Usuario; ?></span>
+                                </div>
+                                <div class="meta-item">
+                                    <i class="fa-solid fa-mobile-screen-button"></i>
+                                    <span>Cel: <?php echo $Telefono; ?></span>
                                 </div>
                                 <div class="meta-item">
                                     <i class="fas fa-calendar-plus"></i>
@@ -213,6 +219,7 @@
                             <div class="table-cell col-user">Usuario</div>
                             <div class="table-cell col-id">Identificación</div>
                             <div class="table-cell col-email">Email</div>
+                            <div class="table-cell col-telefono">Telefono</div>
                             <div class="table-cell col-rol">Rol</div>
                             <div class="table-cell col-empresa">Empresa</div>
                             <div class="table-cell col-creado">Creado</div>
@@ -236,6 +243,7 @@
                                 data-nombre="<?php echo $Nombre; ?>"
                                 data-apellidos="<?php echo $Apellidos; ?>"
                                 data-email="<?php echo $Email; ?>"
+                                data-telefono="<?php echo $Telefono; ?>"
                                 data-idempresa="<?php echo $Id_Empresa; ?>"
                                 data-empresa="<?php echo $Empresa; ?>"
                                 data-foto="<?php echo $imgPath; ?>"
@@ -249,6 +257,7 @@
                                 </div>
                                 <div class="table-cell col-id"><span><?php echo $Id_Usuario; ?></span></div>
                                 <div class="table-cell col-email"><span><?php echo $Email; ?></span></div>
+                                <div class="table-cell col-telefono"><span><?php echo $Telefono; ?></span></div>
                                 <div class="table-cell col-rol"><span class="role-badge <?php echo $Rol; ?>"><?php echo $Rol; ?></span></div>
                                 <div class="table-cell col-empresa"><?php echo $Empresa; ?></div>
                                 <div class="table-cell col-creado"><?php echo $Fecha_Creacion; ?></div>
@@ -308,9 +317,15 @@
                             <input type="text" id="user-name" name="NOMBRES" class="form-input" placeholder="Nombre del usuario" required>
                         </div>
                     </div>
-                    <div class="form-group">
-                        <label for="user-lastname">Apellidos</label>
-                        <input type="text" id="user-lastname" name="APELLIDOS" class="form-input" placeholder="Apellidos del usuario" required>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="user-lastname">Apellidos</label>
+                            <input type="text" id="user-lastname" name="APELLIDOS" class="form-input" placeholder="Apellidos del usuario" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="user-telefono">Telefono</label>
+                            <input type="number" id="user-telefono" name="TELEFONO" class="form-input" placeholder="Telefono del usuario" required>
+                        </div>
                     </div>
                     <div class="form-group">
                         <label for="user-email">Email</label>
@@ -399,9 +414,15 @@
                             <input type="text" id="user-name-edit" name="NOMBRES" class="form-input" placeholder="Nombre del usuario" required>
                         </div>
                     </div>
-                    <div class="form-group">
-                        <label for="user-lastname-edit">Apellidos</label>
-                        <input type="text" id="user-lastname-edit" name="APELLIDOS" class="form-input" placeholder="Apellidos del usuario" required>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="user-lastname-edit">Apellidos</label>
+                            <input type="text" id="user-lastname-edit" name="APELLIDOS" class="form-input" placeholder="Apellidos del usuario" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="user-telefono-edit">Telefono</label>
+                            <input type="text" id="user-telefono-edit" name="TELEFONO" class="form-input" placeholder="Telefono del usuario" required>
+                        </div>
                     </div>
                     <div class="form-group">
                         <label for="user-email-edit">Email</label>
@@ -471,6 +492,6 @@
     <script src="Funcion_Menu"></script>
 
     <script src="Funcion_Sincronizacion"></script>
-    <script src="Funcion_Usuarios_ALL"></script>
+    <script src="Funcion_Usuarios"></script>
 </body>
 </html>

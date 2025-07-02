@@ -427,6 +427,11 @@
     min-width: 256px;
 }
 
+.table-cell.col-telefono {
+    flex: 1;
+    min-width: 111px;
+}
+
 .table-cell.col-rol {
     flex: 1;
     min-width: 111px;

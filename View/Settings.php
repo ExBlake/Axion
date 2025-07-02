@@ -5,8 +5,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Configuración</title>
     <link rel="icon" type="image/x-icon" href="Icono">
-    <link rel="stylesheet" href="Estilos_Menu_Hawks">
-    <link rel="stylesheet" href="Estilos_Configuracion_Hawks">
+    <link rel="stylesheet" href="Estilos_Menu">
+    <link rel="stylesheet" href="Estilos_Configuracion">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=SF+Pro+Display:wght@300;400;500;600&display=swap">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Roboto+Mono:wght@400;500&display=swap">

@@ -61,25 +61,25 @@ RewriteRule ^Estilos_Menu$ View/css/Styles_Menus.css [L]
 RewriteRule ^Estilos_Configuracion$ View/css/Styles_Settings.css [L]
 
 # Reescribe la URL para 'Styles_Companies.css'
-RewriteRule ^Estilos_Empresas_Hawks$ View/css/Styles_Companies.css [L]
+RewriteRule ^Estilos_Empresas$ View/css/Styles_Companies.css [L]
 
 # Reescribe la URL para 'Styles_Dashboard.css'
-RewriteRule ^Estilos_Tablero_Hawks$ View/css/Styles_Dashboard.css [L]
+RewriteRule ^Estilos_Tablero$ View/css/Styles_Dashboard.css [L]
 
 # Reescribe la URL para 'Styles_Login.css'
-RewriteRule ^Estilos_Inicio_Sesion_Hawks$ View/css/Styles_Login.css [L]
+RewriteRule ^Estilos_Inicio_Sesion$ View/css/Styles_Login.css [L]
 
 # Reescribe la URL para 'Styles_PowerBI.css'
-RewriteRule ^Estilos_PowerBI_Hawks$ View/css/Styles_PowerBI.css [L]
+RewriteRule ^Estilos_PowerBI$ View/css/Styles_PowerBI.css [L]
 
 # Reescribe la URL para 'Styles_SignUp.css'
-RewriteRule ^Estilos_Registros_Hawks$ View/css/Styles_SignUp.css [L]
+RewriteRule ^Estilos_Registros$ View/css/Styles_SignUp.css [L]
 
 # Reescribe la URL para 'Styles_Users.css'
-RewriteRule ^Estilos_Usuarios_Hawks_ALL$ View/css/Styles_Users.css [L]
+RewriteRule ^Estilos_Usuarios$ View/css/Styles_Users.css [L]
 
 # Reescribe la URL para 'Styles_Comments.css'
-RewriteRule ^Estilos_PQRS_Hawks$ View/css/Styles_Comments.css [L]
+RewriteRule ^Estilos_PQRS$ View/css/Styles_Comments.css [L]
 
 # Reescribe la URL para 'Styles_Tutorials.css'
 RewriteRule ^Estilos_Tutoriales$ View/css/Styles_Tutorials.css [L]
@@ -102,7 +102,7 @@ RewriteRule ^Funcion_Menu$ View/js/Script_Menus.js [L]
 RewriteRule ^Funcion_Configuracion$ View/js/Script_Settings.js [L]
 
 # Reescribe la URL para 'Script_Companies.js'
-RewriteRule ^Funcion_Empresa_ALLs$ View/js/Script_Companies.js [L]
+RewriteRule ^Funcion_Empresa$ View/js/Script_Companies.js [L]
 
 # Reescribe la URL para 'Script_Dashboard.js'
 RewriteRule ^Funcion_Tablero$ View/js/Script_Dashboard.js [L]
@@ -117,10 +117,10 @@ RewriteRule ^Funcion_Registro$ View/js/Script_SignUp.js [L]
 RewriteRule ^Funcion_Sincronizacion$ View/js/Script_syncSettings.js [L]
 
 # Reescribe la URL para 'Script_Users.js'
-RewriteRule ^Funcion_Usuarios_ALL$ View/js/Script_Users.js [L]
+RewriteRule ^Funcion_Usuarios$ View/js/Script_Users.js [L]
 
 # Reescribe la URL para 'Script_Comments.js'
-RewriteRule ^Funcion_PQRS_ALLS$ View/js/Script_Comments.js [L]
+RewriteRule ^Funcion_PQRS$ View/js/Script_Comments.js [L]
 
 # Reescribe la URL para 'Script_Tutorials.js'
 RewriteRule ^Funcion_Tutoriales$ View/js/Script_Tutorials.js [L]

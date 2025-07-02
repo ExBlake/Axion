@@ -34,13 +34,14 @@ class UserController{
             $Nombre = htmlspecialchars(trim($_POST['NOMBRES']), ENT_QUOTES, 'UTF-8');
             $Apellidos = htmlspecialchars(trim($_POST['APELLIDOS']), ENT_QUOTES, 'UTF-8');
             $Correo = filter_var(trim($_POST['EMAIL']), FILTER_VALIDATE_EMAIL);
+            $Telefono = trim($_POST['TELEFONO']);
             $Contrasena = trim($_POST['CONTRA']);
             $Rol = htmlspecialchars(trim($_POST['ROL']), ENT_QUOTES, 'UTF-8');
             $Empresa = htmlspecialchars(trim($_POST['EMPRESA']), ENT_QUOTES, 'UTF-8');
 
             if ($Cedula && $Nombre && $Apellidos && $Correo && $Contrasena && $Rol) {
                 $usuario = new UsuarioModel();
-                $registro_exitoso = $usuario->RegisterUserModel($Empresa, $Cedula, $Nombre, $Apellidos, $Correo, $Contrasena, $Rol, $Fotos ?? null);
+                $registro_exitoso = $usuario->RegisterUserModel($Empresa, $Cedula, $Nombre, $Apellidos, $Correo, $Contrasena, $Telefono, $Rol, $Fotos ?? null);
 
                 if ($registro_exitoso === true) {
                     $_SESSION['Mensaje'] = "¡El usuario fue registrado correctamente!";
@@ -403,6 +404,7 @@ class UserController{
             $nombres = trim($_POST['NOMBRES']);
             $apellidos = trim($_POST['APELLIDOS']);
             $email = trim($_POST['EMAIL']);
+            $Telefono = trim($_POST['TELEFONO']);
             $empresa = trim($_POST['EMPRESA']);
             $rol = trim($_POST['ROL']);
             $estado = trim($_POST['ESTADO']);
@@ -484,7 +486,7 @@ class UserController{
             // 6. Intentar actualizar el usuario en la base de datos
             try {
                 $userModel = new UsuarioModel();
-                $userModel->UpdateUserByAdmin($id, $cc, $nombres, $apellidos, $email, $empresa, $rol, $estado, $rutaFinal);
+                $userModel->UpdateUserByAdmin($id, $cc, $nombres, $apellidos, $email, $Telefono, $empresa, $rol, $estado, $rutaFinal);
 
                 $_SESSION['Mensaje'] = "¡El usuario ha sido actualizado correctamente!";
                 $_SESSION['MensajeTipo'] = "success";

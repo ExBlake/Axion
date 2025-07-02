@@ -6,8 +6,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>PQRS</title>
     <link rel="icon" type="image/x-icon" href="Icono">
-    <link rel="stylesheet" href="Estilos_Menu_Hawks">
-    <link rel="stylesheet" href="Estilos_PQRS_Hawks">
+    <link rel="stylesheet" href="Estilos_Menu">
+    <link rel="stylesheet" href="Estilos_PQRS">
     <link rel="stylesheet"
         href="https://fonts.googleapis.com/css2?family=SF+Pro+Display:wght@300;400;500;600&display=swap">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap">
@@ -599,7 +599,7 @@
 
     <script src="Funcion_Menu"></script>
     <script src="Funcion_Sincronizacion"></script>
-    <script src="Funcion_PQRS_ALLS"></script>
+    <script src="Funcion_PQRS"></script>
 </body>
 
 </html>
