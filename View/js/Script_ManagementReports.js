@@ -344,20 +344,14 @@ document.addEventListener("DOMContentLoaded", () => {
         const data = reportElement.dataset
         
         // Asignar valores al modal
-        document.getElementById("details-name").textContent = data.name
+        document.getElementById("details-name").textContent = data.nombre_informe
         document.getElementById("details-company").textContent = data.company
-        document.getElementById("details-type").textContent = data.type
-        document.getElementById("details-type").className = "report-type " + data.type.toLowerCase()
         document.getElementById("details-status").textContent = data.status
         document.getElementById("details-status").className = "report-status " + data.status.toLowerCase().replace(" ", "-")
-        document.getElementById("details-priority").textContent = data.priority + " Prioridad"
-        document.getElementById("details-priority").className = "report-priority " + data.priority.toLowerCase()
-        document.getElementById("details-description").textContent = data.description
         document.getElementById("details-url").value = data.url
-        document.getElementById("details-author").textContent = data.author
-        document.getElementById("details-department").textContent = data.department
         document.getElementById("details-created").textContent = data.created
         document.getElementById("details-updated").textContent = data.updated
+        document.getElementById("details-plan-badge").textContent = data.plan
 
         // Set up copy URL button in details
         const copyUrlDetailsBtn = document.getElementById("copy-url-details")
@@ -432,101 +426,17 @@ document.addEventListener("DOMContentLoaded", () => {
 
         // Asignar valores al formulario
         document.getElementById("report-id").value = data.id
-        document.getElementById("report-name").value = data.name
-        document.getElementById("report-company").value = data.company
-        document.getElementById("report-type").value = data.type
-        document.getElementById("report-url").value = data.url
-        document.getElementById("report-description").value = data.description
-        document.getElementById("report-author").value = data.author
-        document.getElementById("report-department").value = data.department
-        document.getElementById("report-priority").value = data.priority
-        document.getElementById("report-status").value = data.status
-    }
-
-    // Helper functions
-    function generateId() {
-        return "report_" + Math.random().toString(36).substr(2, 9)
+        document.getElementById("report-nombre").value = data.nombre_informe
+        // document.getElementById("report-status").textContent = data.status
+        document.getElementById("report-company").value = data.companyId;
+        document.getElementById("report-url").value = data.url;
+        document.getElementById("report-plan").value = data.planId;
     }
 
     // Initialize the page
     filterReports()
 
-    // Form submission handling
-    const ReportForm = document.getElementById('report-form')
-    const saveReportBtnEnd = document.getElementById('save-report')
-    const editReportBtnEnd = document.getElementById('edit-report')
-    const actionInput = document.getElementById('action-form')
 
-    // Botón para registrar nuevo informe
-    if (saveReportBtnEnd && ReportForm) {
-        saveReportBtnEnd.addEventListener('click', function () {
-            actionInput.value = 'Registrar_Informe'
-            
-            // Validar campos requeridos
-            const company = document.getElementById('report-company').value
-            const name = document.getElementById('report-name').value
-            const type = document.getElementById('report-type').value
-            const description = document.getElementById('report-description').value
-            const url = document.getElementById('report-url').value
-            const author = document.getElementById('report-author').value
-            const department = document.getElementById('report-department').value
-
-            if (!company || !name || !type || !description || !url || !author || !department) {
-                alert('Por favor, complete todos los campos requeridos.')
-                return
-            }
-
-            // Validar URL de Power BI
-            if (!url.includes('powerbi.com')) {
-                alert('Por favor, ingrese una URL válida de Power BI.')
-                return
-            }
-
-            console.log('Registrando nuevo informe:', {
-                company, name, type, description, url, author, department
-            })
-            
-            // Aquí normalmente enviarías los datos al servidor
-            alert('Informe Power BI creado exitosamente!')
-            closeReportModal()
-        })
-    }
-
-    // Botón para editar informe existente
-    if (editReportBtnEnd && ReportForm) {
-        editReportBtnEnd.addEventListener('click', function () {
-            actionInput.value = 'Editar_Informe'
-            
-            // Validar campos requeridos
-            const company = document.getElementById('report-company').value
-            const name = document.getElementById('report-name').value
-            const type = document.getElementById('report-type').value
-            const description = document.getElementById('report-description').value
-            const url = document.getElementById('report-url').value
-            const author = document.getElementById('report-author').value
-            const department = document.getElementById('report-department').value
-
-            if (!company || !name || !type || !description || !url || !author || !department) {
-                alert('Por favor, complete todos los campos requeridos.')
-                return
-            }
-
-            // Validar URL de Power BI
-            if (!url.includes('powerbi.com')) {
-                alert('Por favor, ingrese una URL válida de Power BI.')
-                return
-            }
-
-            console.log('Editando informe:', {
-                id: document.getElementById('report-id').value,
-                company, name, type, description, url, author, department
-            })
-            
-            // Aquí normalmente enviarías los datos al servidor
-            alert('Informe Power BI actualizado exitosamente!')
-            closeReportModal()
-        })
-    }
 
     // Apply user settings function
     function applyUserSettings() {
@@ -688,4 +598,27 @@ document.addEventListener("DOMContentLoaded", () => {
         clearInterval(settingsInterval)
         observer.disconnect()
     })
+
+    const ReportingForm = document.getElementById('report-form');
+    const saveReportingBtnEnd = document.getElementById('save-report');
+    const editCompanyBtnEnd = document.getElementById('edit-report');
+    const accionInput = document.getElementById('accion-form');
+
+   // Botón para registrar nueva reporte
+    if (saveReportingBtnEnd && ReportingForm) {
+        saveReportingBtnEnd.addEventListener('click', function () {
+            accionInput.value = 'Registrar_Reporting';
+            ReportingForm.submit();
+        });
+    }
+
+    // Botón para editar reporte
+    if (editCompanyBtnEnd && ReportingForm) {
+        editCompanyBtnEnd.addEventListener('click', function () {
+            accionInput.value = 'Editar_Reporting';
+            ReportingForm.submit();
+        });
+    }
+
+
 })

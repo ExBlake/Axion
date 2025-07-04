@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -26,13 +27,30 @@
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;600;700&display=swap">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
+
 <body>
     <div class="dashboard-container">
         <!-- Sidebar -->
-        <?php include 'Layout/HeaderLeft.php'; ?>
+
+        <?php include 'Layout/HeaderLeft.php';
+        /****************** MESSAGES ***********************/
+        include_once(__DIR__ . '/Layout/FlashMessage.php');
+        /************************************************/
+        /****************** Company Controllers ***********************/
+        require_once(__DIR__.'/../Controller/CompaniesController.php');
+        /************************************************/
+        /****************** Planes Controllers ***********************/
+        require_once(__DIR__.'/../Controller/PlanReportController.php');
+        /************************************************/
+        $Companies = new CompaniesController();
+        $CompaniesAll = $Companies->GetAllCompaniesController();
+        $PlanReport = new PlanesReportController();
+        $Plan = $PlanReport->GetAllPlanesController();
+        $Reporting = $PlanReport->GetAllReportingController();
+        ?>
         <!-- Main Content -->
         <div class="main-content">
-          
+
 
             <!-- Reports Content -->
             <div class="dashboard-content">
@@ -68,299 +86,148 @@
                         </div>
                     </div>
                 </div>
+                <?php
+                    function prepararInforme($row) {
+                        
+                        $Id_Informe = htmlspecialchars($row['Id_Informe'] ?? 'Desconocido');
+                        $Nombre_Informe = htmlspecialchars($row['Nombre_Informe'] ?? 'Sin Nombre');
+                        $URL = htmlspecialchars($row['Url'] ?? 'Sin URL');
+                        $Estado = htmlspecialchars($row['Estado'] ?? 'Sin estado');
+
+                        $Fecha_Creacion = htmlspecialchars(
+                            isset($row['Fecha_Creacion']) && $row['Fecha_Creacion'] !== ''
+                                ? date('d/m/Y', strtotime($row['Fecha_Creacion']))
+                                : ''
+                        );
+                        
+                        $Fecha_Actualizacion = htmlspecialchars(
+                            isset($row['Fecha_Actualizacion']) && $row['Fecha_Actualizacion'] !== ''
+                                ? date('d/m/Y g:i:s A', strtotime($row['Fecha_Actualizacion']))
+                                : ''
+                        );
+
+                        $Id_Planes = htmlspecialchars($row['Id_Planes'] ?? 'Desconocido');
+                        $Nombre_Plan = htmlspecialchars($row['Nombre_Plan'] ?? 'Sin nombre');
+
+                        $Id_Empresa = htmlspecialchars($row['Id_Empresa'] ?? 'Desconocido');
+                        $Nombre_Empresa = htmlspecialchars($row['Nombre_Empresa'] ?? 'Sin empresa');
+
+                        $URL_Parsed = parse_url($URL);
+                        $host = $URL_Parsed['host'] ?? '';
+                        $path = $URL_Parsed['path'] ?? '';
+                        $query = $URL_Parsed['query'] ?? '';
+
+                        $PreviewURL = $host . $path;
+                        if ($query) {
+                            $PreviewURL .= '?' . substr($query, 0, 30) . '...';
+                        }
+
+                        return compact(
+                            'Id_Informe','Nombre_Informe', 'PreviewURL', 'URL', 'Estado', 'Fecha_Creacion', 'Fecha_Actualizacion',
+                            'Id_Planes', 'Nombre_Plan', 'Id_Empresa', 'Nombre_Empresa'
+                        );
+                    }
+                ?>
+
 
                 <!-- Reports Grid View (Default) -->
                 <div class="reports-grid" id="reports-grid">
-                    <!-- Sample Report Cards -->
-                    <div class="report-card" 
-                         data-id="1"
-                         data-company="Apple Inc."
-                         data-name="Dashboard Financiero Q4 2024"
-                         data-url="https://app.powerbi.com/view?r=eyJrIjoiYWJjZGVmZ2hpams"
-                         data-status="Activo"
-                         data-type="Financiero"
-                         data-priority="Alta"
-                         data-description="Dashboard completo de análisis financiero para el cuarto trimestre de 2024, incluyendo métricas de ingresos, gastos y proyecciones."
-                         data-created="15/01/2024"
-                         data-updated="20/01/2024"
-                         data-author="Juan Pérez"
-                         data-department="Finanzas"
-                         data-plan="Enterprise Pro"
-                         data-last-sync="2024-01-20T14:30:00">
-                        
-                        
-                        <div class="report-card-header">
-    <div class="report-title-section">
-        <h3>Dashboard Financiero Q4 2024</h3>
-        <div class="report-company">
-            <i class="fas fa-building"></i>
-            <span>Apple Inc.</span>
-        </div>
-    </div>
-    <div class="report-status-badge-large active">
-        <span>Activo</span>
-    </div>
-</div>
-                        
-                        <div class="report-description">
-                            <p>Dashboard completo de análisis financiero para el cuarto trimestre de 2024, incluyendo métricas de ingresos, gastos y proyecciones.</p>
-                        </div>
-                        
-                        <div class="report-tags">
-                            <span class="report-type financial">Financiero</span>
-                            <span class="report-priority high">Alta Prioridad</span>
-                            <span class="report-plan enterprise-pro">Enterprise Pro</span>
-                        </div>
+                    <?php if (!empty($Reporting)): ?>
+                        <?php 
+                        foreach ($Reporting as $informe): 
+                            extract(prepararInforme($informe));
+                        ?>
+                            <div class="report-card"
+                                    data-id="<?= $Id_Informe ?>"
+                                    data-nombre_informe="<?= $Nombre_Informe ?>"
+                                    data-url="<?= $URL ?>"
+                                    data-status="<?= $Estado ?>"
+                                    data-created="<?= $Fecha_Creacion ?>"
+                                    data-updated="<?= $Fecha_Actualizacion ?>"
+                                    data-company-id="<?= $Id_Empresa ?>"
+                                    data-company="<?= $Nombre_Empresa ?>"
+                                    data-plan-id="<?= $Id_Planes ?>"
+                                    data-plan="<?= $Nombre_Plan ?>">
+                                    
 
-                        <div class="report-sync-status">
-                            <div class="sync-info">
-                                <i class="fas fa-sync-alt synced"></i>
-                                <span class="sync-text">Actualizado: 20/01/2024 - 14:30</span>
-                            </div>
-                        </div>
-                        
-                        <div class="report-details-grid">
-                            <div class="detail-item">
-                                <div class="detail-label">
-                                    <i class="fas fa-link"></i>
-                                    <span>URL Power BI</span>
+                                <div class="report-card-header">
+                                    <div class="report-title-section">
+                                        <h2><?= $Nombre_Informe ?></h2>
+                                    </div>
+                                    <div class="report-status-badge-large <?= $Estado ?>">
+
+                                        <span><?= $Estado ?></span>
+                                    </div>
                                 </div>
-                                <div class="detail-value">
-                                    <span class="url-preview">app.powerbi.com/view?r=eyJr...</span>
-                                    <button class="copy-url-btn" title="Copiar URL">
-                                        <i class="fas fa-copy"></i>
+
+
+                                <div class="report-sync-status">
+                                    <div class="sync-info outdated">
+                                        <i class="fas fa-building"></i>
+                                        <span class="sync-text"><?= $Nombre_Empresa ?></span>
+                                    </div>
+                                </div>
+
+                                <div class="report-details-grid">
+                                    <div class="detail-item">
+                                        <div class="detail-label">
+                                            <i class="fas fa-link"></i>
+                                            <span>URL Power BI</span>
+                                        </div>
+                                        <div class="detail-value">
+                                            <span class="url-preview"><?= $URL?></span>
+                                            <button class="copy-url-btn" title="Copiar URL"
+                                                data-url="<?= $URL ?>">
+                                                <i class="fas fa-copy"></i>
+                                            </button>
+                                        </div>
+                                    </div>
+
+                                    <div class="detail-item">
+                                        <div class="detail-label">
+                                            <i class="fas fa-user"></i>
+                                            <span>Plan</span>
+                                        </div>
+                                        <div class="report-tags">
+
+                                    <span class="report-plan <?= $Nombre_Plan?>"><?= $Nombre_Plan?></span>
+                                </div>
+                                    </div>
+                                    <div class="detail-item">
+                                        <div class="detail-label">
+                                            <i class="fas fa-sitemap"></i>
+                                            <span>Contratación</span>
+                                        </div>
+                                        <div class="detail-value"><?= $Fecha_Creacion ?></div>
+                                    </div>
+                                    <div class="detail-item">
+                                        <div class="detail-label">
+                                            <i class="fas fa-calendar-plus"></i>
+                                            <span>Actualización</span>
+                                        </div>
+                                        <div class="detail-value"><?= $Fecha_Actualizacion?></div>
+                                    </div>
+                                </div>
+
+                                <div class="report-actions">
+                                    <button class="btn-icon edit-report-btn" title="Editar">
+                                        <i class="fas fa-pen"></i>
+                                    </button>
+                                    <button class="btn-icon view-report-btn" title="Ver detalles">
+                                        <i class="fas fa-eye"></i>
+                                    </button>
+                                    <button class="btn-icon open-powerbi-btn" title="Abrir en Power BI"
+                                        data-url="https://app.powerbi.com/view?r=eyJrIjoieHl6YWJjZGVmZ2g">
+                                        <i class="fas fa-external-link-alt"></i>
                                     </button>
                                 </div>
                             </div>
-                            <div class="detail-item">
-                                <div class="detail-label">
-                                    <i class="fas fa-user"></i>
-                                    <span>Autor</span>
-                                </div>
-                                <div class="detail-value">Juan Pérez</div>
-                            </div>
-                            <div class="detail-item">
-                                <div class="detail-label">
-                                    <i class="fas fa-sitemap"></i>
-                                    <span>Departamento</span>
-                                </div>
-                                <div class="detail-value">Finanzas</div>
-                            </div>
-                            <div class="detail-item">
-                                <div class="detail-label">
-                                    <i class="fas fa-calendar-plus"></i>
-                                    <span>Creado</span>
-                                </div>
-                                <div class="detail-value">15/01/2024</div>
-                            </div>
+                        <?php endforeach; ?>
+                    <?php else: ?>
+                        <div class="no-results">
+                            <p>No hay informes disponibles por el momento.</p>
                         </div>
-
-                        <div class="report-actions">
-                            <button class="btn-icon edit-report-btn" title="Editar">
-                                <i class="fas fa-pen"></i>
-                            </button>
-                            <button class="btn-icon view-report-btn" title="Ver detalles">
-                                <i class="fas fa-eye"></i>
-                            </button>
-                            <button class="btn-icon open-powerbi-btn" title="Abrir en Power BI" data-url="https://app.powerbi.com/view?r=eyJrIjoiYWJjZGVmZ2hpams">
-                                <i class="fas fa-external-link-alt"></i>
-                            </button>
-                        </div>
-                    </div>
-
-                    <div class="report-card" 
-                         data-id="2"
-                         data-company="Microsoft"
-                         data-name="Análisis de Ventas Regional"
-                         data-url="https://app.powerbi.com/view?r=eyJrIjoieHl6YWJjZGVmZ2g"
-                         data-status="En Revisión"
-                         data-type="Ventas"
-                         data-priority="Media"
-                         data-description="Reporte detallado de ventas por región con comparativas mensuales y análisis de tendencias de mercado."
-                         data-created="18/01/2024"
-                         data-updated="22/01/2024"
-                         data-author="María González"
-                         data-department="Ventas"
-                         data-plan="Professional"
-                         data-last-sync="2024-01-18T09:15:00">
-                        
-                        
-                        <div class="report-card-header">
-    <div class="report-title-section">
-        <h3>Análisis de Ventas Regional</h3>
-        <div class="report-company">
-            <i class="fas fa-building"></i>
-            <span>Microsoft</span>
-        </div>
-    </div>
-    <div class="report-status-badge-large active">
-
-        <span>Activo</span>
-    </div>
-</div>
-                        
-                        <div class="report-description">
-                            <p>Reporte detallado de ventas por región con comparativas mensuales y análisis de tendencias de mercado.</p>
-                        </div>
-                        
-                        <div class="report-tags">
-                            <span class="report-type sales">Ventas</span>
-                            <span class="report-priority medium">Media Prioridad</span>
-                            <span class="report-plan professional">Professional</span>
-                        </div>
-
-                        <div class="report-sync-status">
-                            <div class="sync-info outdated">
-                                <i class="fas fa-exclamation-triangle"></i>
-                                <span class="sync-text">Desactualizado: 18/01/2024 - 09:15</span>
-                            </div>
-                        </div>
-                        
-                        <div class="report-details-grid">
-                            <div class="detail-item">
-                                <div class="detail-label">
-                                    <i class="fas fa-link"></i>
-                                    <span>URL Power BI</span>
-                                </div>
-                                <div class="detail-value">
-                                    <span class="url-preview">app.powerbi.com/view?r=eyJr...</span>
-                                    <button class="copy-url-btn" title="Copiar URL">
-                                        <i class="fas fa-copy"></i>
-                                    </button>
-                                </div>
-                            </div>
-                            <div class="detail-item">
-                                <div class="detail-label">
-                                    <i class="fas fa-user"></i>
-                                    <span>Autor</span>
-                                </div>
-                                <div class="detail-value">María González</div>
-                            </div>
-                            <div class="detail-item">
-                                <div class="detail-label">
-                                    <i class="fas fa-sitemap"></i>
-                                    <span>Departamento</span>
-                                </div>
-                                <div class="detail-value">Ventas</div>
-                            </div>
-                            <div class="detail-item">
-                                <div class="detail-label">
-                                    <i class="fas fa-calendar-plus"></i>
-                                    <span>Creado</span>
-                                </div>
-                                <div class="detail-value">18/01/2024</div>
-                            </div>
-                        </div>
-
-                        <div class="report-actions">
-                            <button class="btn-icon edit-report-btn" title="Editar">
-                                <i class="fas fa-pen"></i>
-                            </button>
-                            <button class="btn-icon view-report-btn" title="Ver detalles">
-                                <i class="fas fa-eye"></i>
-                            </button>
-                            <button class="btn-icon open-powerbi-btn" title="Abrir en Power BI" data-url="https://app.powerbi.com/view?r=eyJrIjoieHl6YWJjZGVmZ2g">
-                                <i class="fas fa-external-link-alt"></i>
-                            </button>
-                        </div>
-                    </div>
-
-                    <div class="report-card" 
-                         data-id="3"
-                         data-company="Google"
-                         data-name="Dashboard de Recursos Humanos"
-                         data-url="https://app.powerbi.com/view?r=eyJrIjoicXdlcnR5dWlvcA"
-                         data-status="Inactivo"
-                         data-type="RRHH"
-                         data-priority="Baja"
-                         data-description="Panel de control para gestión de recursos humanos con métricas de empleados, rotación y satisfacción laboral."
-                         data-created="20/01/2024"
-                         data-updated="20/01/2024"
-                         data-author="Carlos Rodríguez"
-                         data-department="Recursos Humanos"
-                         data-plan="Basic"
-                         data-last-sync="2024-01-15T16:45:00">
-                        
-                        
-                        <div class="report-card-header">
-    <div class="report-title-section">
-        <h3>Dashboard de Recursos Humanos</h3>
-        <div class="report-company">
-            <i class="fas fa-building"></i>
-            <span>Google</span>
-        </div>
-    </div>
-    <div class="report-status-badge-large inactive">
-
-        <span>Inactivo</span>
-    </div>
-</div>
-                        
-                        <div class="report-description">
-                            <p>Panel de control para gestión de recursos humanos con métricas de empleados, rotación y satisfacción laboral.</p>
-                        </div>
-                        
-                        <div class="report-tags">
-                            <span class="report-type hr">RRHH</span>
-                            <span class="report-priority low">Baja Prioridad</span>
-                            <span class="report-plan basic">Basic</span>
-                        </div>
-
-                        <div class="report-sync-status">
-                            <div class="sync-info error">
-                                <i class="fas fa-times-circle"></i>
-                                <span class="sync-text">Sin sincronizar: 15/01/2024 - 16:45</span>
-                            </div>
-                        </div>
-                        
-                        <div class="report-details-grid">
-                            <div class="detail-item">
-                                <div class="detail-label">
-                                    <i class="fas fa-link"></i>
-                                    <span>URL Power BI</span>
-                                </div>
-                                <div class="detail-value">
-                                    <span class="url-preview">app.powerbi.com/view?r=eyJr...</span>
-                                    <button class="copy-url-btn" title="Copiar URL">
-                                        <i class="fas fa-copy"></i>
-                                    </button>
-                                </div>
-                            </div>
-                            <div class="detail-item">
-                                <div class="detail-label">
-                                    <i class="fas fa-user"></i>
-                                    <span>Autor</span>
-                                </div>
-                                <div class="detail-value">Carlos Rodríguez</div>
-                            </div>
-                            <div class="detail-item">
-                                <div class="detail-label">
-                                    <i class="fas fa-sitemap"></i>
-                                    <span>Departamento</span>
-                                </div>
-                                <div class="detail-value">Recursos Humanos</div>
-                            </div>
-                            <div class="detail-item">
-                                <div class="detail-label">
-                                    <i class="fas fa-calendar-plus"></i>
-                                    <span>Creado</span>
-                                </div>
-                                <div class="detail-value">20/01/2024</div>
-                            </div>
-                        </div>
-
-                        <div class="report-actions">
-                            <button class="btn-icon edit-report-btn" title="Editar">
-                                <i class="fas fa-pen"></i>
-                            </button>
-                            <button class="btn-icon view-report-btn" title="Ver detalles">
-                                <i class="fas fa-eye"></i>
-                            </button>
-                            <button class="btn-icon open-powerbi-btn" title="Abrir en Power BI" data-url="https://app.powerbi.com/view?r=eyJrIjoicXdlcnR5dWlvcA">
-                                <i class="fas fa-external-link-alt"></i>
-                            </button>
-                        </div>
-                    </div>
+                    <?php endif; ?>
                 </div>
 
                 <!-- Reports List View (Hidden by default) -->
@@ -369,163 +236,68 @@
                         <div class="table-row table-header">
                             <div class="table-cell cell-name">Nombre del Informe</div>
                             <div class="table-cell cell-company">Empresa</div>
-                            <div class="table-cell cell-type">Tipo</div>
-                            <div class="table-cell cell-author">Autor</div>
                             <div class="table-cell cell-status">Estado</div>
                             <div class="table-cell cell-plan">Plan</div>
                             <div class="table-cell cell-updated">Actualizado</div>
                             <div class="table-cell cell-actions">Acciones</div>
                         </div>
+                        <?php if (!empty($Reporting)): ?>
+                            <?php foreach ($Reporting as $raw): ?>
+                                <?php 
+                                    $informe = prepararInforme($raw);
+                                    extract($informe); 
+                                ?>
+                                <div class="table-row"
+                                    data-id="<?= $Id_Informe ?>"
+                                    data-nombre_informe="<?= $Nombre_Informe ?>"
+                                    data-url="<?= $URL ?>"
+                                    data-status="<?= $Estado ?>"
+                                    data-created="<?= $Fecha_Creacion ?>"
+                                    data-updated="<?= $Fecha_Actualizacion ?>"
+                                    data-company-id="<?= $Id_Empresa ?>"
+                                    data-company="<?= $Nombre_Empresa ?>"
+                                    data-plan-id="<?= $Id_Planes ?>"
+                                    data-plan="<?= $Nombre_Plan ?>">
 
-                        <div class="table-row"
-                             data-id="1"
-                             data-company="Apple Inc."
-                             data-name="Dashboard Financiero Q4 2024"
-                             data-url="https://app.powerbi.com/view?r=eyJrIjoiYWJjZGVmZ2hpams"
-                             data-status="Activo"
-                             data-type="Financiero"
-                             data-priority="Alta"
-                             data-description="Dashboard completo de análisis financiero para el cuarto trimestre de 2024"
-                             data-created="15/01/2024"
-                             data-updated="20/01/2024"
-                             data-author="Juan Pérez"
-                             data-department="Finanzas"
-                             data-plan="Enterprise Pro"
-                             data-last-sync="2024-01-20T14:30:00">
+                                    <div class="table-cell cell-name">
+                                        <div class="report-name-cell">
+                                            <span class="report-title"><?= $Nombre_Informe ?></span>
+                                            <span class="report-url"><?= $PreviewURL ?></span>
+                                        </div>
+                                    </div>
+                                    <div class="table-cell cell-company"><?= $Nombre_Empresa ?></div>
 
-                            <div class="table-cell cell-name">
-                                <div class="report-name-cell">
-                                    <span class="report-title">Dashboard Financiero Q4 2024</span>
-                                    <span class="report-url">app.powerbi.com/view?r=eyJr...</span>
+                                    <div class="table-cell cell-status">
+                                        <div class="status-badge-with-sync active">
+                                            <span class="status-badge <?= $Estado ?>"><?= $Estado ?></span>
+                                        </div>
+                                    </div>
+                                    <div class="table-cell cell-plan">
+                                        <span class="plan-badge <?= $Nombre_Plan ?>"><?= $Nombre_Plan ?></span>
+                                    </div>
+                                    <div class="table-cell cell-updated"><?= $Fecha_Actualizacion ?></div>
+                                    <div class="table-cell cell-actions">
+                                        <button class="btn-icon edit-report-btn" title="Editar">
+                                            <i class="fas fa-pen"></i>
+                                        </button>
+                                        <button class="btn-icon view-report-btn" title="Ver detalles">
+                                            <i class="fas fa-eye"></i>
+                                        </button>
+                                        <button class="btn-icon open-powerbi-btn" title="Abrir en Power BI"
+                                            data-url="<?= $URL ?>">
+                                            <i class="fas fa-external-link-alt"></i>
+                                        </button>
+                                    </div>
                                 </div>
+                            <?php endforeach; ?>
+                        <?php else: ?>
+                            <div class="no-results">
+                                <p>No hay informes disponibles por el momento.</p>
                             </div>
-                            <div class="table-cell cell-company">Apple Inc.</div>
-                            <div class="table-cell cell-type">
-                                <span class="type-badge financial">Financiero</span>
-                            </div>
-                            <div class="table-cell cell-author">Juan Pérez</div>
-                            <div class="table-cell cell-status">
-                                <div class="status-badge-with-sync active">
-                                    <span class="status-badge active">Activo</span>
-                                    <span class="sync-indicator-small synced">●</span>
-                                </div>
-                            </div>
-                            <div class="table-cell cell-plan">
-                                <span class="plan-badge enterprise-pro">Enterprise Pro</span>
-                            </div>
-                            <div class="table-cell cell-updated">20/01/2024 14:30</div>
-                            <div class="table-cell cell-actions">
-                                <button class="btn-icon edit-report-btn" title="Editar">
-                                    <i class="fas fa-pen"></i>
-                                </button>
-                                <button class="btn-icon view-report-btn" title="Ver detalles">
-                                    <i class="fas fa-eye"></i>
-                                </button>
-                                <button class="btn-icon open-powerbi-btn" title="Abrir en Power BI" data-url="https://app.powerbi.com/view?r=eyJrIjoiYWJjZGVmZ2hpams">
-                                    <i class="fas fa-external-link-alt"></i>
-                                </button>
-                            </div>
-                        </div>
+                        <?php endif; ?>
 
-                        <div class="table-row"
-                             data-id="2"
-                             data-company="Microsoft"
-                             data-name="Análisis de Ventas Regional"
-                             data-url="https://app.powerbi.com/view?r=eyJrIjoieHl6YWJjZGVmZ2g"
-                             data-status="En Revisión"
-                             data-type="Ventas"
-                             data-priority="Media"
-                             data-description="Reporte detallado de ventas por región con comparativas mensuales"
-                             data-created="18/01/2024"
-                             data-updated="22/01/2024"
-                             data-author="María González"
-                             data-department="Ventas"
-                             data-plan="Professional"
-                             data-last-sync="2024-01-18T09:15:00">
 
-                            <div class="table-cell cell-name">
-                                <div class="report-name-cell">
-                                    <span class="report-title">Análisis de Ventas Regional</span>
-                                    <span class="report-url">app.powerbi.com/view?r=eyJr...</span>
-                                </div>
-                            </div>
-                            <div class="table-cell cell-company">Microsoft</div>
-                            <div class="table-cell cell-type">
-                                <span class="type-badge sales">Ventas</span>
-                            </div>
-                            <div class="table-cell cell-author">María González</div>
-                            <div class="table-cell cell-status">
-                                <div class="status-badge-with-sync review">
-                                    <span class="status-badge review">En Revisión</span>
-                                    <span class="sync-indicator-small outdated">●</span>
-                                </div>
-                            </div>
-                            <div class="table-cell cell-plan">
-                                <span class="plan-badge professional">Professional</span>
-                            </div>
-                            <div class="table-cell cell-updated">18/01/2024 09:15</div>
-                            <div class="table-cell cell-actions">
-                                <button class="btn-icon edit-report-btn" title="Editar">
-                                    <i class="fas fa-pen"></i>
-                                </button>
-                                <button class="btn-icon view-report-btn" title="Ver detalles">
-                                    <i class="fas fa-eye"></i>
-                                </button>
-                                <button class="btn-icon open-powerbi-btn" title="Abrir en Power BI" data-url="https://app.powerbi.com/view?r=eyJrIjoieHl6YWJjZGVmZ2g">
-                                    <i class="fas fa-external-link-alt"></i>
-                                </button>
-                            </div>
-                        </div>
-
-                        <div class="table-row"
-                             data-id="3"
-                             data-company="Google"
-                             data-name="Dashboard de Recursos Humanos"
-                             data-url="https://app.powerbi.com/view?r=eyJrIjoicXdlcnR5dWlvcA"
-                             data-status="Inactivo"
-                             data-type="RRHH"
-                             data-priority="Baja"
-                             data-description="Panel de control para gestión de recursos humanos"
-                             data-created="20/01/2024"
-                             data-updated="20/01/2024"
-                             data-author="Carlos Rodríguez"
-                             data-department="Recursos Humanos"
-                             data-plan="Basic"
-                             data-last-sync="2024-01-15T16:45:00">
-
-                            <div class="table-cell cell-name">
-                                <div class="report-name-cell">
-                                    <span class="report-title">Dashboard de Recursos Humanos</span>
-                                    <span class="report-url">app.powerbi.com/view?r=eyJr...</span>
-                                </div>
-                            </div>
-                            <div class="table-cell cell-company">Google</div>
-                            <div class="table-cell cell-type">
-                                <span class="type-badge hr">RRHH</span>
-                            </div>
-                            <div class="table-cell cell-author">Carlos Rodríguez</div>
-                            <div class="table-cell cell-status">
-                                <div class="status-badge-with-sync inactive">
-                                    <span class="status-badge inactive">Inactivo</span>
-                                    <span class="sync-indicator-small error">●</span>
-                                </div>
-                            </div>
-                            <div class="table-cell cell-plan">
-                                <span class="plan-badge basic">Basic</span>
-                            </div>
-                            <div class="table-cell cell-updated">15/01/2024 16:45</div>
-                            <div class="table-cell cell-actions">
-                                <button class="btn-icon edit-report-btn" title="Editar">
-                                    <i class="fas fa-pen"></i>
-                                </button>
-                                <button class="btn-icon view-report-btn" title="Ver detalles">
-                                    <i class="fas fa-eye"></i>
-                                </button>
-                                <button class="btn-icon open-powerbi-btn" title="Abrir en Power BI" data-url="https://app.powerbi.com/view?r=eyJrIjoicXdlcnR5dWlvcA">
-                                    <i class="fas fa-external-link-alt"></i>
-                                </button>
-                            </div>
-                        </div>
+                       
                     </div>
                 </div>
             </div>
@@ -543,87 +315,46 @@
                 </button>
             </div>
             <div class="modal-body">
-                <form id="report-form">
-                    <input type="hidden" id="report-id">
+                <form id="report-form" action="XZ" method="post" enctype="multipart/form-data">
+                    <input type="hidden" id="report-id" name="ID_INFORME">
+                    <input type="hidden" name="csrf_token" id="csrf_token_input"
+                        value="<?php echo htmlspecialchars($_SESSION['csrf_token']); ?>">
                     <div class="form-group">
-                        <label for="report-name">Nombre del Informe</label>
-                        <input type="text" id="report-name" class="form-input" placeholder="Ej: Dashboard Financiero Q4 2024" required>
-                    </div>
+                        <label for="report-nombre">Nombre</label>
+                        <input type="nombre" id="report-nombre" name="NOMBRE" class="form-input"
+                            placeholder="Nombre del Informe" required>
+                    </div>    
                     <div class="form-row">
                         <div class="form-group">
                             <label for="report-company">Empresa</label>
-                            <select id="report-company" class="form-select" required>
+                            <select id="report-company" name="EMPRESA" class="form-select" required>
                                 <option value="">Seleccionar empresa</option>
-                                <option value="Apple Inc.">Apple Inc.</option>
-                                <option value="Microsoft">Microsoft</option>
-                                <option value="Google">Google</option>
-                                <option value="Amazon">Amazon</option>
-                                <option value="Meta">Meta</option>
-                                <option value="Netflix">Netflix</option>
-                            </select>
-                        </div>
-                        <div class="form-group">
-                            <label for="report-type">Tipo de Informe</label>
-                            <select id="report-type" class="form-select" required>
-                                <option value="">Seleccionar tipo</option>
-                                <option value="Financiero">Financiero</option>
-                                <option value="Ventas">Ventas</option>
-                                <option value="Marketing">Marketing</option>
-                                <option value="RRHH">Recursos Humanos</option>
-                                <option value="Operaciones">Operaciones</option>
-                                <option value="Inventario">Inventario</option>
-                                <option value="Calidad">Calidad</option>
-                                <option value="Estratégico">Estratégico</option>
+                                <?php
+                                    foreach ($CompaniesAll as $company) {
+                                        echo '<option value="' . htmlspecialchars($company['Id_Empresa']) . '">' . htmlspecialchars($company['Nombre']) . '</option>';
+                                    }
+                                ?>
                             </select>
                         </div>
                     </div>
                     <div class="form-group">
                         <label for="report-url">URL de Power BI</label>
-                        <input type="url" id="report-url" class="form-input" placeholder="https://app.powerbi.com/view?r=..." required>
+                        <input type="url" id="report-url" name="URL" class="form-input"
+                            placeholder="https://app.powerbi.com/view?r=..." required>
                         <small class="form-help">Pegue aquí la URL completa del informe de Power BI</small>
                     </div>
                     <div class="form-group">
-                        <label for="report-description">Descripción</label>
-                        <textarea id="report-description" class="form-textarea" placeholder="Descripción detallada del informe y su propósito" required></textarea>
-                    </div>
-                    <div class="form-row">
-                        <div class="form-group">
-                            <label for="report-author">Autor</label>
-                            <input type="text" id="report-author" class="form-input" placeholder="Nombre del autor" required>
-                        </div>
-                        <div class="form-group">
-                            <label for="report-department">Departamento</label>
-                            <input type="text" id="report-department" class="form-input" placeholder="Departamento responsable" required>
-                        </div>
-                    </div>
-                    <div class="form-row">
-                        <div class="form-group">
-                            <label for="report-priority">Prioridad</label>
-                            <select id="report-priority" class="form-select" required>
-                                <option value="Baja">Baja</option>
-                                <option value="Media" selected>Media</option>
-                                <option value="Alta">Alta</option>
-                            </select>
-                        </div>
-                        
-<div class="form-group">
-    <label for="report-status">Estado</label>
-    <select id="report-status" class="form-select" required>
-        <option value="Activo" selected>Activo</option>
-        <option value="Inactivo">Inactivo</option>
-    </select>
-</div>
-                    </div>
-                    <div class="form-group">
                         <label for="report-plan">Plan Asociado</label>
-                        <select id="report-plan" class="form-select" required>
-                            <option value="Basic">Basic</option>
-                            <option value="Professional">Professional</option>
-                            <option value="Enterprise">Enterprise</option>
-                            <option value="Enterprise Pro" selected>Enterprise Pro</option>
+                        <select id="report-plan" name="PLAN" class="form-select" required>
+                            <option value="">Seleccionar plan</option>
+                            <?php
+                                foreach ($Plan as $PlanALl) {
+                                    echo '<option value="' . htmlspecialchars($PlanALl['Id_Planes']) . '">' . htmlspecialchars($PlanALl['Nombre']) . '</option>';
+                                }
+                            ?>
                         </select>
                     </div>
-                    <input type="hidden" id="action-form" value="">
+                    <input type="hidden" name="accionReporting" id="accion-form" value="">
                 </form>
             </div>
             <div class="modal-footer">
@@ -651,7 +382,9 @@
                         <i class="fas fa-shield-alt"></i>
                         <h4>Información Confidencial</h4>
                     </div>
-                    <p>⚠️ <strong>IMPORTANTE:</strong> Este enlace de Power BI contiene información confidencial y NO debe ser compartido con personas no autorizadas. El acceso no autorizado puede comprometer datos sensibles de la empresa.</p>
+                    <p>⚠️ <strong>IMPORTANTE:</strong> Este enlace de Power BI contiene información confidencial y NO
+                        debe ser compartido con personas no autorizadas. El acceso no autorizado puede comprometer datos
+                        sensibles de la empresa.</p>
                 </div>
 
                 <div class="report-details-header">
@@ -660,11 +393,6 @@
                         <div class="details-company">
                             <i class="fas fa-building"></i>
                             <span id="details-company">Empresa</span>
-                        </div>
-                        <div class="details-tags">
-                            <span class="report-type" id="details-type">Tipo</span>
-                            <span class="report-status" id="details-status">Estado</span>
-                            <span class="report-priority" id="details-priority">Prioridad</span>
                         </div>
                     </div>
                     <div class="report-details-actions">
@@ -683,27 +411,12 @@
                     <h4>Plan Asociado</h4>
                     <div class="plan-info">
                         <span class="plan-badge-large" id="details-plan-badge">Enterprise Pro</span>
-                        <span class="plan-description" id="details-plan-description">Acceso completo a todas las funcionalidades</span>
-                    </div>
-                </div>
-
-                <div class="report-details-section">
-                    <h4>Estado de Sincronización</h4>
-                    <div class="sync-details-large">
-                        <div class="sync-status-detail" id="details-sync-status">
-                            <div class="sync-indicator-detail synced">
-                                <i class="fas fa-check-circle"></i>
-                                <span>Sincronizado correctamente</span>
-                            </div>
-                            <span class="sync-time" id="details-last-sync">Última actualización: 20/01/2024 a las 14:30</span>
+                        <div class="details-tags">
+                            <span class="report-status" id="details-status">Estado</span>
                         </div>
                     </div>
                 </div>
 
-                <div class="report-details-section">
-                    <h4>Descripción</h4>
-                    <p id="details-description">Descripción del informe...</p>
-                </div>
                 <div class="report-details-section">
                     <h4>URL de Power BI</h4>
                     <div class="url-display">
@@ -716,14 +429,6 @@
                 <div class="report-details-section">
                     <h4>Información del Informe</h4>
                     <div class="details-grid">
-                        <div class="details-item">
-                            <span class="details-label">Autor</span>
-                            <span class="details-value" id="details-author">Autor</span>
-                        </div>
-                        <div class="details-item">
-                            <span class="details-label">Departamento</span>
-                            <span class="details-value" id="details-department">Departamento</span>
-                        </div>
                         <div class="details-item">
                             <span class="details-label">Fecha de Creación</span>
                             <span class="details-value" id="details-created">Fecha</span>
@@ -741,8 +446,10 @@
             </div>
         </div>
     </div>
+
     <script src="Funcion_Menu"></script>
     <script src="Funcion_Sincronizacion"></script>
     <script src="Funcion_Reportes"></script>
 </body>
+
 </html>

@@ -41,6 +41,7 @@
         // Evitar errores si faltan datos
         $nombre = htmlspecialchars($UserProfile['Nombre'] ?? 'Desconocido');
         $apellidos = htmlspecialchars($UserProfile['Apellidos'] ?? '');
+        $Telefono = htmlspecialchars($UserProfile['Telefono'] ?? '');
         $rol = htmlspecialchars($UserProfile['Rol'] ?? 'Usuario');
         $email = htmlspecialchars($UserProfile['Email'] ?? '');
         $foto = htmlspecialchars($UserProfile['Foto'] ?? '');
@@ -139,6 +140,10 @@
                                         <div class="form-group">
                                             <label for="APELLIDOS">Apellidos</label>
                                             <input type="text" name="APELLIDOS" value="<?php echo $apellidos; ?>" class="settings-input">
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="TELEFONO">Telefono</label>
+                                            <input type="text" name="TELEFONO" value="<?php echo $Telefono; ?>" class="settings-input">
                                         </div>
                                     </div>
                                     <div class="form-group">

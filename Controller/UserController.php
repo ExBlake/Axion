@@ -238,9 +238,10 @@ class UserController{
      * @param string $nombre
      * @param string $apellidos
      * @param string $email
+     * @param int $telefono
      * @return void
      */
-    public function EditUserForProfileController($nombre, $apellidos, $email) {
+    public function EditUserForProfileController($nombre, $apellidos, $email, $telefono) {
         if (session_status() == PHP_SESSION_NONE) session_start();
 
         if (!isset($_SESSION['usuario_id'])) {
@@ -254,6 +255,7 @@ class UserController{
 
         $nombre = trim($nombre);
         $apellidos = trim($apellidos);
+        $telefono = trim($telefono);
         $email = filter_var($email, FILTER_SANITIZE_EMAIL);
 
         if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
@@ -283,7 +285,7 @@ class UserController{
         }
 
         $usuarioModel = new UsuarioModel();
-        $usuarioModel->EditUserForProfile($usuarioID, $nombre, $apellidos, $email, $fotoFinal);
+        $usuarioModel->EditUserForProfile($usuarioID, $nombre, $apellidos, $email, $fotoFinal, $telefono);
         $_SESSION['Mensaje'] = "¡Los datos del usuario han sido actualizados correctamente!";
         $_SESSION['MensajeTipo'] = "success";
         header("Location: Configuracion");

@@ -347,12 +347,12 @@ class UsuarioModel{
      * @param string $email Correo electrónico.
      * @param string $foto Nombre de la imagen.
      */
-    public function EditUserForProfile($id, $nombre, $apellidos, $email, $foto) {
+    public function EditUserForProfile($id, $nombre, $apellidos, $email, $foto, $telefono) {
         $db = new Database();
         $conn = $db->getConnection();
 
-        $stmt = $conn->prepare("UPDATE Usuarios SET Nombre = ?, Apellidos = ?, Email = ?, Foto = ? WHERE Id_Usuario = ?");
-        $stmt->bind_param("sssss", $nombre, $apellidos, $email, $foto, $id);
+        $stmt = $conn->prepare("UPDATE Usuarios SET Nombre = ?, Apellidos = ?, Email = ?, Telefono = ?, Foto = ? WHERE Id_Usuario = ?");
+        $stmt->bind_param("sssiss", $nombre, $apellidos, $email, $telefono, $foto, $id);
         $stmt->execute();
 
         $stmt->close();

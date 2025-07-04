@@ -221,13 +221,13 @@
   border: 1px solid;
 }
 
-.report-status-badge-large.active {
+.report-status-badge-large.Activo {
   background-color: rgba(52, 199, 89, 0.1);
   border-color: #34c759;
   color: #34c759;
 }
 
-.report-status-badge-large.inactive {
+.report-status-badge-large.Inactivo {
   background-color: rgba(255, 59, 48, 0.1);
   border-color: #ff3b30;
   color: #ff3b30;
@@ -313,119 +313,50 @@
   color: white;
 }
 
-.report-description {
-  flex: 1;
-}
 
-.report-description p {
-  color: var(--text-secondary);
-  font-size: 15px;
-  margin: 0;
-  line-height: 1.6;
-}
 
-.report-tags {
-  display: flex;
-  gap: 10px;
-  align-items: center;
-  flex-wrap: wrap;
-}
 
-.report-type {
-  display: inline-block;
-  padding: 6px 14px;
-  border-radius: 12px;
-  font-size: 12px;
-  font-weight: 500;
-}
-
-.report-type.financial {
-  background-color: var(--financial-light);
-  color: var(--financial-color);
-}
-
-.report-type.sales {
-  background-color: var(--sales-light);
-  color: var(--sales-color);
-}
-
-.report-type.marketing {
-  background-color: var(--marketing-light);
-  color: var(--marketing-color);
-}
-
-.report-type.hr {
-  background-color: var(--hr-light);
-  color: var(--hr-color);
-}
-
-.report-type.operations {
-  background-color: var(--operations-light);
-  color: var(--operations-color);
-}
-
-.report-type.strategic {
-  background-color: var(--strategic-light);
-  color: var(--strategic-color);
-}
-
-.report-priority {
-  display: inline-block;
-  padding: 6px 14px;
-  border-radius: 12px;
-  font-size: 12px;
-  font-weight: 500;
-}
-
-.report-priority.low {
-  background-color: rgba(142, 142, 147, 0.1);
-  color: #8e8e93;
-}
-
-.report-priority.medium {
-  background-color: rgba(255, 149, 0, 0.1);
-  color: #ff9500;
-}
-
-.report-priority.high {
-  background-color: rgba(255, 59, 48, 0.1);
-  color: #ff3b30;
-}
 
 /* PLAN ASOCIADO */
 .report-plan {
   display: inline-block;
-  padding: 6px 14px;
-  border-radius: 12px;
-  font-size: 12px;
+  padding: 4px 14px;
+  border-radius: 5px;
+  font-size: 11px;
   font-weight: 600;
   text-transform: uppercase;
-  border: 1px solid;
 }
 
-.report-plan.basic {
+.report-plan.Emprendedor {
   background-color: rgba(142, 142, 147, 0.1);
   color: #8e8e93;
   border-color: #8e8e93;
 }
 
-.report-plan.professional {
+.report-plan.Pyme {
   background-color: rgba(0, 122, 255, 0.1);
   color: #007aff;
   border-color: #007aff;
 }
 
-.report-plan.enterprise {
+.report-plan.Pro {
   background-color: rgba(88, 86, 214, 0.1);
   color: #5856d6;
   border-color: #5856d6;
 }
 
-.report-plan.enterprise-pro {
+.report-plan.Master {
   background-color: rgba(255, 45, 85, 0.1);
   color: #ff2d55;
   border-color: #ff2d55;
 }
+
+.report-plan.Estrategia {
+  background-color: rgba(32, 201, 151, 0.1); 
+  color: #20c997; 
+  border-color: #20c997;
+}
+
 
 /* INFORMACIÓN DE SINCRONIZACIÓN PROMINENTE */
 .report-sync-status {
@@ -443,44 +374,16 @@
   font-weight: 500;
 }
 
-.sync-info i {
-  font-size: 16px;
-}
-
-.sync-info.synced {
-  color: #34c759;
-}
-
-.sync-info.synced i {
-  color: #34c759;
-}
-
-.report-sync-status:has(.sync-info.synced) {
-  border-left-color: #34c759;
-}
-
 .sync-info.outdated {
   color: #ff9500;
 }
 
 .sync-info.outdated i {
-  color: #ff9500;
+  color: var(--primary-color);
 }
 
 .report-sync-status:has(.sync-info.outdated) {
-  border-left-color: #ff9500;
-}
-
-.sync-info.error {
-  color: #ff3b30;
-}
-
-.sync-info.error i {
-  color: #ff3b30;
-}
-
-.report-sync-status:has(.sync-info.error) {
-  border-left-color: #ff3b30;
+  border-left-color: var(--primary-color);
 }
 
 .sync-text {
@@ -604,24 +507,31 @@
 .cell-name {
   flex: 2.5;
 }
+
 .cell-company {
   flex: 1.2;
 }
+
 .cell-type {
   flex: 1;
 }
+
 .cell-author {
   flex: 1.2;
 }
+
 .cell-status {
   flex: 1.5;
 }
+
 .cell-plan {
   flex: 1.2;
 }
+
 .cell-updated {
   flex: 1.5;
 }
+
 .cell-actions {
   flex: 1.5;
 }
@@ -643,43 +553,6 @@
   color: var(--text-secondary);
 }
 
-.type-badge {
-  display: inline-block;
-  padding: 4px 10px;
-  border-radius: 12px;
-  font-size: 12px;
-  font-weight: 500;
-}
-
-.type-badge.financial {
-  background-color: var(--financial-light);
-  color: var(--financial-color);
-}
-
-.type-badge.sales {
-  background-color: var(--sales-light);
-  color: var(--sales-color);
-}
-
-.type-badge.marketing {
-  background-color: var(--marketing-light);
-  color: var(--marketing-color);
-}
-
-.type-badge.hr {
-  background-color: var(--hr-light);
-  color: var(--hr-color);
-}
-
-.type-badge.operations {
-  background-color: var(--operations-light);
-  color: var(--operations-color);
-}
-
-.type-badge.strategic {
-  background-color: var(--strategic-light);
-  color: var(--strategic-color);
-}
 
 /* ESTADO CON SINCRONIZACIÓN EN TABLA */
 .status-badge-with-sync {
@@ -696,17 +569,12 @@
   font-weight: 500;
 }
 
-.status-badge.active {
+.status-badge.Activo {
   background-color: rgba(52, 199, 89, 0.1);
   color: #34c759;
 }
 
-.status-badge.review {
-  background-color: rgba(255, 149, 0, 0.1);
-  color: #ff9500;
-}
-
-.status-badge.inactive {
+.status-badge.Inactivo {
   background-color: rgba(255, 59, 48, 0.1);
   color: #ff3b30;
 }
@@ -741,28 +609,34 @@
   border: 1px solid;
 }
 
-.plan-badge.basic {
+.plan-badge.Emprendedor {
   background-color: rgba(142, 142, 147, 0.1);
   color: #8e8e93;
   border-color: #8e8e93;
 }
 
-.plan-badge.professional {
+.plan-badge.Pyme {
   background-color: rgba(0, 122, 255, 0.1);
   color: #007aff;
   border-color: #007aff;
 }
 
-.plan-badge.enterprise {
+.plan-badge.Pro {
   background-color: rgba(88, 86, 214, 0.1);
   color: #5856d6;
   border-color: #5856d6;
 }
 
-.plan-badge.enterprise-pro {
+.plan-badge.Master {
   background-color: rgba(255, 45, 85, 0.1);
   color: #ff2d55;
   border-color: #ff2d55;
+}
+
+.plan-badge.Estrategia {
+  background-color: rgba(32, 201, 151, 0.1); 
+  color: #20c997; 
+  border-color: #20c997;
 }
 
 .actions-cell {
@@ -886,33 +760,55 @@
   border: 1px solid;
 }
 
-.plan-badge-large.basic {
+.plan-badge-large.Emprendedor {
   background-color: rgba(142, 142, 147, 0.1);
   color: #8e8e93;
   border-color: #8e8e93;
 }
 
-.plan-badge-large.professional {
+.plan-badge-large.Pyme {
   background-color: rgba(0, 122, 255, 0.1);
   color: #007aff;
   border-color: #007aff;
 }
 
-.plan-badge-large.enterprise {
+.plan-badge-large.Pro {
   background-color: rgba(88, 86, 214, 0.1);
   color: #5856d6;
   border-color: #5856d6;
 }
 
-.plan-badge-large.enterprise-pro {
+.plan-badge-large.Master {
   background-color: rgba(255, 45, 85, 0.1);
   color: #ff2d55;
   border-color: #ff2d55;
 }
 
-.plan-description {
-  font-size: 13px;
-  color: var(--text-secondary);
+.plan-badge-large.Estrategia {
+  background-color: rgba(32, 201, 151, 0.1); 
+  color: #20c997; 
+  border-color: #20c997;
+}
+
+.details-tags {
+  display: inline-block;
+  padding: 8px 16px;
+  border-radius: 12px;
+  font-size: 14px;
+  font-weight: 600;
+  text-transform: uppercase;
+  border: 1px solid;
+}
+
+.details-tags.Activo {
+  background-color: rgba(52, 199, 89, 0.1);
+  border-color: #34c759;
+  color: #34c759;
+}
+.details-tags.Inactivo {
+  background-color: rgba(255, 59, 48, 0.1); 
+  border-color: #ff3b30;                  
+  color: #ff3b30;                 
 }
 
 /* SINCRONIZACIÓN DETALLADA EN MODAL */
@@ -1100,6 +996,7 @@
     opacity: 0;
     transform: scale(0.95);
   }
+
   to {
     opacity: 1;
     transform: scale(1);

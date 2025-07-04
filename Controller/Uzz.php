@@ -3,6 +3,7 @@ session_start();
 require_once(__DIR__ . '/UserController.php');
 require_once(__DIR__ . '/CompaniesController.php');
 require_once(__DIR__ . '/PQRSController.php');
+require_once(__DIR__ . '/PlanReportController.php');
 
 //**********************************************/
 // CONTROLADOR PRINCIPAL PARA ENRUTAR LOS FORMULARIOS POST
@@ -21,6 +22,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $User = new UserController();
         $Company = new CompaniesController();
         $PQRS = new PQRSController();
+        $Reporting = new PlanesReportController();
 
         
         //**********************************************/
@@ -47,8 +49,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $nombre = $_POST['NOMBRE'] ?? '';
             $apellidos = $_POST['APELLIDOS'] ?? '';
             $email = $_POST['EMAIL'] ?? '';
+            $telefono = $_POST['TELEFONO'] ?? '';
 
-            $UserEditProfile = $User->EditUserForProfileController($nombre, $apellidos, $email);
+            $UserEditProfile = $User->EditUserForProfileController($nombre, $apellidos, $email, $telefono);
         }
         
         //**********************************************/
@@ -98,6 +101,18 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $idPQRS = $_POST['Id_PQRS'] ?? '';
             $PQRSResponse = $PQRS->EditRespondToPQRController($idPQRS, $respuesta);
         }
+
+        //**********************************************/
+        // REPORTING - REGISTRO
+        //**********************************************/
+        if(isset($_POST['accionReporting']) && $_POST['accionReporting'] === 'Registrar_Reporting') {
+            $RepotingNew = $Reporting->RegisterReportingController();
+        }
+        
+        elseif(isset($_POST['accionReporting']) && $_POST['accionReporting'] === 'Editar_Reporting'){
+            $RepotingEdit = $Reporting->EditReportController();
+        }
+
 
     } else {
         //**********************************************/
