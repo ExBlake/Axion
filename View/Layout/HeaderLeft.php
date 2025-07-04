@@ -2,7 +2,7 @@
     require_once(__DIR__ . '/../../Controller/UserController.php');
     $userController = new UserController();
     $userDetails = $userController->GetUserBySessionController();
-    $userCompany = $userController->GetPlansByCompanyController();
+    $userCompany = $userController->GetReportByCompanyController();
 
 
     $rolUsuario = isset($userDetails['Rol']) ? $userDetails['Rol'] : 'Empleado'; // valor por defecto
@@ -53,47 +53,48 @@
             <?php } ?>
             <!-- Menú dinámico basado en la empresa del usuario y sus planes -->
             <?php 
-            if (!empty($userCompany)) {
-                // Agrupar planes por empresa
-                $empresas = [];
-                foreach ($userCompany as $plan) {
-                    $empresas[$plan['Empresa']][] = $plan;
+                if (!empty($userCompany)) {
+                    // Agrupar informes por empresa
+                    $empresas = [];
+                    foreach ($userCompany as $reporte) {
+                        $empresaNombre = $reporte['Empresa'];
+                        $empresas[$empresaNombre][] = $reporte;
+                    }
                 }
-            }
-            ?>
+                ?>
 
-            <?php if (!empty($empresas)): ?>
-            <?php foreach ($empresas as $empresa => $planes): ?>
-            <li class="has-submenu">
-                <a href="#<?php echo htmlspecialchars($empresa); ?>">
-                    <i class="fas fa-building"></i>
-                    <span><?php echo htmlspecialchars($empresa); ?></span>
-                    <i class="fas fa-chevron-right submenu-arrow"></i>
-                </a>
-                <ul class="submenu">
-                    <?php foreach ($planes as $plan): ?>
-                    <li>
-                        <a
-                            href="Informes?plan=<?php echo urlencode($plan['Id_Planes']); ?>&empresa=<?php echo urlencode($plan['Id_Empresa']); ?>">
-                            <?php echo htmlspecialchars($plan['Plan']); ?>
-                        </a>
-                    </li>
+                <?php if (!empty($empresas)): ?>
+                    <?php foreach ($empresas as $empresa => $informes): ?>
+                        <li class="has-submenu">
+                            <a href="#<?php echo htmlspecialchars($empresa); ?>">
+                                <i class="fas fa-building"></i>
+                                <span><?php echo htmlspecialchars($empresa); ?></span>
+                                <i class="fas fa-chevron-right submenu-arrow"></i>
+                            </a>
+                            <ul class="submenu">
+                                <?php foreach ($informes as $informe): ?>
+                                    <li>
+                                        <a href="Informes?i=<?= urlencode($informe['Id_Informe']) ?>&e=<?= urlencode($informe['Id_Empresa']) ?>">
+                                            <?= htmlspecialchars($informe['Nombre_Informe']) ?>
+                                        </a>
+                                    </li>
+                                <?php endforeach; ?>
+                            </ul>
+                        </li>
                     <?php endforeach; ?>
-                </ul>
-            </li>
-            <?php endforeach; ?>
-            <?php else: ?>
-            <li class="has-submenu">
-                <a href="#no-company">
-                    <i class="fas fa-building"></i>
-                    <span>Sin Empresa</span>
-                    <i class="fas fa-chevron-right submenu-arrow"></i>
-                </a>
-                <ul class="submenu">
-                    <li><a href="#">No hay planes</a></li>
-                </ul>
-            </li>
-            <?php endif; ?>
+                <?php else: ?>
+                    <li class="has-submenu">
+                        <a href="#no-company">
+                            <i class="fas fa-building"></i>
+                            <span>Sin Empresa</span>
+                            <i class="fas fa-chevron-right submenu-arrow"></i>
+                        </a>
+                        <ul class="submenu">
+                            <li><a href="#">No hay informes</a></li>
+                        </ul>
+                    </li>
+                <?php endif; ?>
+
 
             <li>
                 <a href="PQRS">

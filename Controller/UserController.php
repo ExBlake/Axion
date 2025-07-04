@@ -150,7 +150,7 @@ class UserController{
      * Obtiene los planes de la empresa asociada al usuario autenticado.
      * @return array|null
      */
-    public function GetPlansByCompanyController() {
+    public function GetReportByCompanyController() {
         // Inicia la sesión si aún no se ha iniciado
         if (session_status() == PHP_SESSION_NONE) {
             session_start();
@@ -162,7 +162,7 @@ class UserController{
             
             // Obtener los planes correspondientes a la empresa del usuario desde el modelo
             $usuarioModel = new UsuarioModel();
-            $planes = $usuarioModel->GetPlansByCompany($usuarioID);
+            $planes = $usuarioModel->GetReportsByUser($usuarioID);
             
             // Retornar los planes para usarlos en la vista o para procesamiento adicional
             return $planes;
@@ -181,28 +181,22 @@ class UserController{
      * @param string $empresaId
      * @return array|null
      */
-    public function GetReportsByPlansController($planId, $empresaId) {
-        // Inicia la sesión si aún no se ha iniciado
+    public function GetReportByIdController($informeId, $empresaId) {
         if (session_status() == PHP_SESSION_NONE) {
             session_start();
         }
-        
-        // Verificar si el usuario ha iniciado sesión
-        if (isset($_SESSION['usuario_id'])) {            
-            // Obtener los planes correspondientes a la empresa del usuario desde el modelo
+
+        if (isset($_SESSION['usuario_id'])) {
             $usuarioModel = new UsuarioModel();
-            $planes = $usuarioModel->GetPlanByUrl($planId, $empresaId);
-            
-            // Retornar los planes para usarlos en la vista o para procesamiento adicional
-            return $planes;
+            return $usuarioModel->GetInformeById($informeId, $empresaId);
         } else {
-            // Si no hay sesión, redirigir al inicio de sesión
             $_SESSION['Mensaje'] = "Por seguridad, tu sesión ha expirado. Intenta nuevamente.";
             $_SESSION['MensajeTipo'] = "success";
             header('Location: Inicio');
             exit();
         }
     }
+
 
     /**
      * Obtiene los datos del perfil del usuario en sesión.

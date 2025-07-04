@@ -31,19 +31,18 @@
         require_once(__DIR__ . '/../Controller/UserController.php');
         $userController = new UserController();
 
-        // Capturamos los parámetros 'plan' y 'empresa' enviados en la URL
-        $planId = isset($_GET['plan']) ? $_GET['plan'] : null;
-        $empresaId = isset($_GET['empresa']) ? $_GET['empresa'] : null;
+        $informeId = isset($_GET['i']) ? $_GET['i'] : null;
+        $empresaId = isset($_GET['e']) ? $_GET['e'] : null;
 
-        // Usamos el método para traer la URL del informe según el plan y la empresa
-        $plan = null;
-        if ($planId !== null && $empresaId !== null) {
-            $plan = $userController->GetReportsByPlansController($planId, $empresaId);
+        $informe = null;
+        if ($informeId !== null && $empresaId !== null) {
+            $informe = $userController->GetReportByIdController($informeId, $empresaId);
         }
 
-        // Extraemos la URL del informe, si se encontró el plan, de lo contrario se deja vacío
-        $informeUrl = $plan ? $plan['Url'] : '';
-        $planNombre = $plan ? $plan['Nombre_Plan'] : '';
+        $informeUrl = $informe ? $informe['Url'] : '';
+        $nombreInforme = $informe ? $informe['Nombre_Informe'] : '';
+        $nombrePlan = $informe ? $informe['Nombre_Plan'] : '';
+
     ?>
     <div class="dashboard-container">
         <!-- Sidebar -->
@@ -54,34 +53,14 @@
             <!-- Top Navigation Bar -->
             <?php include 'Layout/HeaderUp.php'; ?>
 
-            <!-- Sub Navigation -->
-            <!--<div class="sub-navigation">-->
-            <!--    <div class="breadcrumb">-->
-            <!--        <span>Inicio</span>-->
-            <!--        <i class="fas fa-chevron-right"></i>-->
-            <!--        <span class="current">Settings</span>-->
-            <!--    </div>-->
-            <!--</div>-->
+
 
             <!-- Power BI Content -->
             <div class="dashboard-content">
                 <div class="section-header">
-                    <?php if ($planNombre): ?>
-                        <h1><?php echo htmlspecialchars($planNombre); ?></h1>
+                    <?php if ($nombreInforme): ?>
+                        <h1><?php echo htmlspecialchars($nombreInforme); ?></h1>
                     <?php endif; ?>
-                    <!--<div class="header-actions">-->
-                    <!--    <div class="date-range-selector">-->
-                    <!--        <button class="btn btn-outline">-->
-                    <!--            <i class="fas fa-calendar"></i>-->
-                    <!--            <span>Últimos 30 días</span>-->
-                    <!--            <i class="fas fa-chevron-down"></i>-->
-                    <!--        </button>-->
-                    <!--    </div>-->
-                    <!--    <button class="btn btn-primary">-->
-                    <!--        <i class="fas fa-download"></i>-->
-                    <!--        <span>Exportar</span>-->
-                    <!--    </button>-->
-                    <!--</div>-->
                 </div>
                 <!-- Nota estática para el usuario -->
                 <div class="user-note">

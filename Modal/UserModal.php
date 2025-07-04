@@ -255,34 +255,59 @@ class UsuarioModel{
      * @param string $usuarioID ID del usuario.
      * @return array Lista de planes.
      */
-    public function GetPlansByCompany($usuarioID) {
+    public function GetReportsByUser($usuarioID) {
         $conn = $this->db->getConnection();
-        $query = "
-        SELECT 
-            e.Id_Empresa, 
-            e.Nombre AS Empresa, 
-            p.Id_Planes, 
-            p.Nombre AS Plan
-        FROM Empresas e
-        LEFT JOIN Empresas_Planes ep ON ep.Id_Empresa = e.Id_Empresa
-        LEFT JOIN Planes p ON p.Id_Planes = ep.Id_Planes
-        WHERE (
-            -- Si el usuario pertenece a 'hawks capital', se muestran los planes de todas las empresas
-            (SELECT LOWER(e2.Nombre) 
-             FROM Empresas e2 
-             JOIN Usuarios u2 ON u2.Id_Empresa = e2.Id_Empresa
-             WHERE u2.Id_Usuario = ?) = 'Hawks Capital S.A.S.'
-            OR
-            -- En caso contrario, se filtra por la empresa a la que pertenece el usuario
-            e.Id_Empresa = (SELECT u3.Id_Empresa 
-                            FROM Usuarios u3 
-                            WHERE u3.Id_Usuario = ?)
-        )
-        ORDER BY e.Nombre, p.Nombre";
-                  
-        $stmt = $conn->prepare($query);
-        // Se usa el mismo parámetro $usuarioID en ambas subconsultas
-        $stmt->bind_param("ss", $usuarioID, $usuarioID);
+
+        // 1. Obtener rol y empresa del usuario
+        $queryUser = "SELECT u.Rol, u.Id_Empresa FROM Usuarios u WHERE u.Id_Usuario = ?";
+        $stmtUser = $conn->prepare($queryUser);
+        $stmtUser->bind_param("s", $usuarioID);
+        $stmtUser->execute();
+        $resultUser = $stmtUser->get_result();
+        $user = $resultUser->fetch_assoc();
+        $stmtUser->close();
+
+        $rol = $user['Rol'] ?? '';
+        $empresaID = $user['Id_Empresa'] ?? '';
+
+        // 2. Si es Administrador, traer todos los informes
+        if ($rol === 'Administrador') {
+            $query = "
+                SELECT 
+                    e.Nombre AS Empresa,
+                    e.Id_Empresa,
+                    i.Id_Informe,
+                    i.Nombre AS Nombre_Informe,
+                    i.Url,
+                    i.Estado,
+                    i.Fecha_Creacion,
+                    i.Fecha_Actualizacion
+                FROM Informes i
+                JOIN Empresas e ON i.Id_Empresa = e.Id_Empresa
+                ORDER BY e.Nombre, i.Nombre
+            ";
+            $stmt = $conn->prepare($query);
+        } else {
+            // 3. Si no es administrador, solo los de su empresa
+            $query = "
+                SELECT 
+                    e.Nombre AS Empresa,
+                    e.Id_Empresa,
+                    i.Id_Informe,
+                    i.Nombre AS Nombre_Informe,
+                    i.Url,
+                    i.Estado,
+                    i.Fecha_Creacion,
+                    i.Fecha_Actualizacion
+                FROM Informes i
+                JOIN Empresas e ON i.Id_Empresa = e.Id_Empresa
+                WHERE i.Id_Empresa = ?
+                ORDER BY i.Nombre
+            ";
+            $stmt = $conn->prepare($query);
+            $stmt->bind_param("s", $empresaID);
+        }
+
         $stmt->execute();
         $result = $stmt->get_result();
         return $result->fetch_all(MYSQLI_ASSOC);
@@ -291,30 +316,31 @@ class UsuarioModel{
     /**
      * Obtiene los datos del plan y la URL del informe relacionado.
      * 
-     * @param string $planId ID del plan.
+     * @param string $idInforme ID del informe.
      * @param int $empresaId ID de la empresa.
      * @return array|null Datos del plan con URL.
      */
-    public function GetPlanByUrl($planId, $empresaId) {
+    public function GetInformeById($idInforme, $empresaId) {
         $conn = $this->db->getConnection();
         $query = "
-        SELECT 
-        e.Id_Empresa,
-        e.Nombre AS Nombre_Empresa,
-        p.Id_Planes,
-        p.Nombre AS Nombre_Plan,
-        i.Url AS Url
-        FROM Empresas e
-        JOIN Informes i ON e.Id_Empresa = i.Id_Empresa
-        JOIN Planes p ON i.Id_Planes = p.Id_Planes
-        WHERE p.Id_Planes = ? AND e.Id_Empresa = ?;
+            SELECT 
+                i.Id_Informe,
+                i.Nombre AS Nombre_Informe,
+                i.Url,
+                p.Nombre AS Nombre_Plan,
+                e.Nombre AS Nombre_Empresa
+            FROM Informes i
+            JOIN Planes p ON p.Id_Planes = i.Id_Planes
+            JOIN Empresas e ON e.Id_Empresa = i.Id_Empresa
+            WHERE i.Id_Informe = ? AND i.Id_Empresa = ?;
         ";
         $stmt = $conn->prepare($query);
-        $stmt->bind_param("ss", $planId, $empresaId);
+        $stmt->bind_param("ss", $idInforme, $empresaId);
         $stmt->execute();
         $result = $stmt->get_result();
         return $result->fetch_assoc();
     }
+
 
     /**
      * Obtiene los datos de un usuario para mostrar en un modal de perfil.
