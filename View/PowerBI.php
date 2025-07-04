@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Dashboard Analytics</title>
+    <title>Informe</title>
     <link rel="icon" type="image/x-icon" href="Icono">
     <link rel="stylesheet" href="Estilos_Menu">
     <link rel="stylesheet" href="Estilos_PowerBI">

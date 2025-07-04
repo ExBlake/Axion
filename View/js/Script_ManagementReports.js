@@ -341,36 +341,40 @@ document.addEventListener("DOMContentLoaded", () => {
 
     // Function to populate details modal
     function populateDetailsModal(reportElement) {
-        const data = reportElement.dataset
-        
-        // Asignar valores al modal
-        document.getElementById("details-name").textContent = data.nombre_informe
-        document.getElementById("details-company").textContent = data.company
-        document.getElementById("details-status").textContent = data.status
-        document.getElementById("details-status").className = "report-status " + data.status.toLowerCase().replace(" ", "-")
-        document.getElementById("details-url").value = data.url
-        document.getElementById("details-created").textContent = data.created
-        document.getElementById("details-updated").textContent = data.updated
-        document.getElementById("details-plan-badge").textContent = data.plan
+        const data = reportElement.dataset;
 
-        // Set up copy URL button in details
-        const copyUrlDetailsBtn = document.getElementById("copy-url-details")
-        const openPowerBIDetailsBtn = document.getElementById("open-powerbi-details")
-        
+        document.getElementById("details-name").textContent = data.nombre_informe;
+        document.getElementById("details-company").textContent = data.company;
+        document.getElementById("details-status").textContent = data.status;
+        document.getElementById("details-status").className = "report-status " + data.status.toLowerCase().replace(" ", "-");
+        document.getElementById("details-url").value = data.url;
+        document.getElementById("details-created").textContent = data.created;
+        document.getElementById("details-updated").textContent = data.updated;
+        document.getElementById("details-plan-badge").textContent = data.plan;
+
+        const informeId = data.id;
+        const empresaId = data.companyId; // camelCase
+
+
+        const url_All = `Informes?i=${encodeURIComponent(informeId)}&e=${encodeURIComponent(empresaId)}`;
+
+        const copyUrlDetailsBtn = document.getElementById("copy-url-details");
+        const openPowerBIDetailsBtn = document.getElementById("open-powerbi-details");
+
         if (copyUrlDetailsBtn) {
-            copyUrlDetailsBtn.onclick = () => copyToClipboard(data.url)
-        }
-        
-        if (openPowerBIDetailsBtn) {
-            openPowerBIDetailsBtn.onclick = () => window.open(data.url, '_blank')
+            copyUrlDetailsBtn.onclick = () => copyToClipboard(data.url);
         }
 
-        // Copy URL button in details modal
-        const detailsCopyBtn = document.querySelector("#report-details-modal .copy-url-btn")
+        if (openPowerBIDetailsBtn) {
+            openPowerBIDetailsBtn.onclick = () => window.open(url_All, '_blank');
+        }
+
+        const detailsCopyBtn = document.querySelector("#report-details-modal .copy-url-btn");
         if (detailsCopyBtn) {
-            detailsCopyBtn.onclick = () => copyToClipboard(data.url)
+            detailsCopyBtn.onclick = () => copyToClipboard(data.url);
         }
     }
+
 
     // Edit report
     const editReportBtns = document.querySelectorAll(".edit-report-btn")

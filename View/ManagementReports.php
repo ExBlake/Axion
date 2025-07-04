@@ -217,7 +217,7 @@
                                         <i class="fas fa-eye"></i>
                                     </button>
                                     <button class="btn-icon open-powerbi-btn" title="Abrir en Power BI"
-                                        data-url="https://app.powerbi.com/view?r=eyJrIjoieHl6YWJjZGVmZ2g">
+                                        data-url="<?php echo "Informes?i=" . urlencode($Id_Informe) . "&e=" . urlencode($Id_Empresa); ?>">
                                         <i class="fas fa-external-link-alt"></i>
                                     </button>
                                 </div>
@@ -284,7 +284,7 @@
                                             <i class="fas fa-eye"></i>
                                         </button>
                                         <button class="btn-icon open-powerbi-btn" title="Abrir en Power BI"
-                                            data-url="<?= $URL ?>">
+                                            data-url="<?php echo "Informes?i=" . urlencode($Id_Informe) . "&e=" . urlencode($Id_Empresa); ?>">
                                             <i class="fas fa-external-link-alt"></i>
                                         </button>
                                     </div>
